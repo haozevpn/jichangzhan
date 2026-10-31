@@ -47,7 +47,7 @@ templates/            测试表与变更记录 CSV 模板
 2. 按托管商要求添加 `jichangzhan.com` 和 `www.jichangzhan.com`，开启 HTTPS，并把非规范主机名设置为 301 到 `https://jichangzhan.com`。域名、托管商和 DNS 账号尚未提供，本地实现没有改动真实 DNS 或部署。
 3. 对外前核对品牌/商标、服务商信息、每个外链和文章来源；补充真实的编辑署名、复核人、联系邮箱、隐私政策适用范围和实际商业关系。
 4. 在 Bing Webmaster Tools 验证规范域名，提交 `https://jichangzhan.com/sitemap.xml`，检查首页、目录和指南 URL 的抓取状态。验证方式与账户功能以当时的 Bing 官方界面为准。
-5. sitemap 由 `@astrojs/sitemap` 随构建生成。只有内容实质更新后才改文章 frontmatter 的 `updatedAt`；不要只为显示新日期而修改。
+5. sitemap 由 `@astrojs/sitemap` 随构建生成；当前只有一个分片时，构建脚本会把它汇总到 `/sitemap.xml`，方便搜索引擎直接读取全部 URL。只有内容实质更新后才改文章 frontmatter 的 `updatedAt`；不要只为显示新日期而修改。
 
 ## IndexNow
 

@@ -5,7 +5,7 @@
 ## 已实现
 
 - Astro 在构建时生成正文、title、description、关键词元数据、canonical、Article/CollectionPage JSON-LD 和面包屑 JSON-LD。
-- `@astrojs/sitemap` 生成 XML sitemap；服务商资料、数据说明、榜单状态页和未配置联系页不进 sitemap。
+- `@astrojs/sitemap` 生成 XML sitemap；当前单个分片会汇总到 `/sitemap.xml`，服务商资料、数据说明、榜单状态页和未配置联系页不进 sitemap。
 - 可索引内容栏目包括 `/ai/`、`/clients/`、`/network/`、`/questions/`、`/tizi/`、`/risk/` 与 `/guides/`，各文章均从栏目页通过普通 HTML 链接可达。
 - `public/robots.txt` 允许抓取公开页面并声明 sitemap。
 - 服务商资料卡和详情页使用 `noindex,follow`，等价格、条款和测试记录逐项核实后再决定是否开放索引。
