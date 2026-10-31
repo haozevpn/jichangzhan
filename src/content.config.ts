@@ -13,7 +13,6 @@ const guides = defineCollection({
     updatedAt: z.string(),
     reviewedBy: z.string().default('编辑部'),
     revisionNote: z.string().default('按公开资料与编辑整理发布；涉及服务表现的结论以测试记录为准。'),
-    sources: z.array(z.object({ label: z.string(), url: z.string().url(), checkedAt: z.string() })).default([]),
   }),
 });
 

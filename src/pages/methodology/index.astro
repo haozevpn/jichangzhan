@@ -8,7 +8,7 @@ const jsonLd = { '@context': 'https://schema.org', '@type': 'WebPage', name: '�
 
 <BaseLayout title="测试方法与评分规则" description="说明网络线路服务的测试条件、样本记录、延迟与吞吐统计、评分权重、证据置信度及适用限制。" jsonLd={jsonLd}>
   <Breadcrumbs items={[{ label: '首页', href: '/' }, { label: '测试方法' }]} />
-  <PageIntro eyebrow="METHODOLOGY / VERSION 0.2" title="测试方法与评分规则" lead="每项测试结论都应能还原到设备、网络、时段和样本。以下流程说明数据如何采集、汇总和解释；供应商自述、目录资料与编辑观察分别标注。" />
+  <PageIntro eyebrow="METHODOLOGY / VERSION 0.2" title="测试方法与评分规则" lead="每项测试结论都应能还原到设备、网络、时段和样本。以下流程说明数据如何采集、汇总和解释；服务商宣传与编辑观察不能替代测试。" />
   <section class="method-layout wrap">
     <div>
       <article class="method-card">
@@ -50,7 +50,7 @@ const jsonLd = { '@context': 'https://schema.org', '@type': 'WebPage', name: '�
         <div class="confidence-list">
           <div><strong>高</strong><span>≥ 3 个日期、有完整条件和可复查证据，主要条款已由一手来源核验。</span></div>
           <div><strong>中</strong><span>重复样本可用，但网络环境、时间覆盖或部分条款存在限制。</span></div>
-          <div><strong>低 / 未评分</strong><span>单次或第三方目录信息，无法支持体验判断；当前目录条目均属此类。</span></div>
+          <div><strong>低 / 未评分</strong><span>单次记录或缺少关键条件，无法支持体验判断；没有完整样本的服务商不发布名次。</span></div>
         </div>
       </article>
     </aside>

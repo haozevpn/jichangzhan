@@ -62,9 +62,8 @@ const jsonLd = article.answer
           {section.bullets && <ul>{section.bullets.map((bullet) => <li>{bullet}</li>)}</ul>}
         </section>
       ))}
-      <p class="article-limits">适用范围：平台规则、客户端版本、网络环境和服务条款可能变化。操作前请核对对应官方资料；本文提供的是排查与比较方法，不构成特定服务的可用性承诺。</p>
+      <p class="article-limits">适用范围：平台规则、客户端版本、网络环境和服务条款可能变化。本文提供的是一般性排查与比较方法，不构成特定服务的可用性承诺。</p>
     </div>
-    {article.sources?.length > 0 && <aside class="article-sources"><h2>一手资料入口</h2><p>政策、版本和支持范围以来源页面当前内容为准；本文不把第三方宣传表述当作独立测试结论。</p><ul>{article.sources.map((source) => <li><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label} ↗</a></li>)}</ul></aside>}
   </article>
   {related.length > 0 && <section class="related-reading"><div class="wrap"><h2>继续阅读</h2><div class="related-list">{related.slice(0, 6).map((item) => <a href={item.href}>{item.title}</a>)}</div></div></section>}
 </BaseLayout>

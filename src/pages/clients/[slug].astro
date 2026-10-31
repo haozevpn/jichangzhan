@@ -3,19 +3,9 @@ import EditorialArticlePage from '../../components/EditorialArticlePage.astro';
 import { clientGuides, editorialDate } from '../../data/editorial';
 
 export function getStaticPaths() {
-  const officialDocs: Record<string, { label: string; url: string }> = {
-    'clash-verge': { label: 'Clash Verge Rev 官方发布页', url: 'https://github.com/clash-verge-rev/clash-verge-rev/releases' },
-    mihomo: { label: 'Mihomo 官方文档', url: 'https://wiki.metacubex.one/' },
-    shadowrocket: { label: 'Shadowrocket App Store 页面', url: 'https://apps.apple.com/app/shadowrocket/id932747118' },
-    v2rayn: { label: 'v2rayN 官方仓库', url: 'https://github.com/2dust/v2rayN' },
-    'sing-box': { label: 'sing-box 官方文档', url: 'https://sing-box.sagernet.org/' },
-    stash: { label: 'Stash 官方文档', url: 'https://stash.wiki/' },
-    surge: { label: 'Surge 官方手册', url: 'https://manual.nssurge.com/' },
-  };
-
   return clientGuides.map((client) => ({
     params: { slug: client.slug },
-    props: { article: { slug: client.slug, title: `${client.name} 使用教程：导入、分流与故障排查`, description: client.summary, keywords: client.keywords, category: '客户端教程', updatedAt: editorialDate, sources: [officialDocs[client.slug]], sections: client.sections } },
+    props: { article: { slug: client.slug, title: `${client.name} 使用教程：导入、分流与故障排查`, description: client.summary, keywords: client.keywords, category: '客户端教程', updatedAt: editorialDate, sections: client.sections } },
   }));
 }
 

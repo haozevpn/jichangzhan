@@ -47,7 +47,6 @@ const jsonLd = {
       </nav>
       <Content />
     </div>
-    {guide.data.sources.length > 0 && <aside class="article-sources"><h2>延伸来源</h2><ul>{guide.data.sources.map((source) => <li><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label} ↗</a> · 核验日期：{source.checkedAt}</li>)}</ul></aside>}
   </article>
   {related.length > 0 && <section class="related-reading"><div class="wrap"><h2>继续阅读</h2><div class="related-list">{related.map((item) => <a href={`/guides/${item.id}/`}>{item.data.title}</a>)}</div></div></section>}
 </BaseLayout>

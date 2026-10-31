@@ -13,7 +13,6 @@ export type EditorialArticle = {
   updatedAt: string;
   answer?: string;
   sections: ContentSection[];
-  sources?: { label: string; url: string }[];
 };
 
 export type AiPlatform = {
@@ -35,7 +34,7 @@ export type ClientGuide = {
   sections: ContentSection[];
 };
 
-export const editorialDate = '2026-10-29';
+export const editorialDate = '2026-11-01';
 
 export const aiPlatforms: AiPlatform[] = [
   {
@@ -58,7 +57,6 @@ export const aiPlatforms: AiPlatform[] = [
         { heading: '出现错误时按层定位', paragraphs: ['先确认系统时间、DNS 和本地网络，再确认客户端是否接管目标域名，最后检查出口 IP 是否频繁变化。fetch failed、连接重置和长响应中断通常需要不同的排查路径。', '每次只改变一个条件，例如只换节点或只切换 TUN，避免同时修改规则、客户端和网络后无法判断原因。'] },
         { heading: '发布测评需要留下什么', paragraphs: ['真实测评至少应写明设备、系统、客户端、节点地区、运营商、时段、样本数和失败次数。对 Claude 这类平台，还要标记浏览器与终端是否分别通过。', '本站只在有可复查记录时发布可用性结论；没有样本的品牌只保留资料状态，不用“稳定”或“支持 Claude”替代证据。'] },
       ],
-      sources: [{ label: 'Anthropic 支持地区说明', url: 'https://support.anthropic.com/en/articles/8522351-where-can-i-access-claude-ai' }],
     },
   },
   {
@@ -81,7 +79,6 @@ export const aiPlatforms: AiPlatform[] = [
         { heading: '终端工具不能默认继承浏览器代理', paragraphs: ['命令行程序通常需要单独设置 HTTP_PROXY、HTTPS_PROXY 或使用 TUN。设置后用一个安全的连通性请求验证，不要把令牌或完整订阅地址贴到在线诊断站。', '长任务测试要记录开始时间、持续时间和中断位置。短暂成功不代表长连接在高峰期也稳定。'] },
         { heading: '如何写出可复查结论', paragraphs: ['测评应写清平台版本、设备、客户端、节点地区、运营商、时间段、样本数和失败样本。结论使用“在这些条件下观察到”，不要扩展成所有用户都可用。'] },
       ],
-      sources: [{ label: 'OpenAI 支持地区说明', url: 'https://help.openai.com/en/articles/5347006-new' }, { label: 'OpenAI 网络错误建议', url: 'https://help.openai.com/en/articles/9247338-network-recommendations-for-chatgpt-errors-on-web-and-apps' }],
     },
   },
   {
@@ -104,7 +101,6 @@ export const aiPlatforms: AiPlatform[] = [
         { heading: '登录回调与长任务', paragraphs: ['登录回调失败时，先观察浏览器回调是否返回终端、端口是否被本机防火墙拦截，以及终端与浏览器是否使用同一出口。', '长任务中断时记录断开时间、是否切换节点、终端错误和本地网络变化。稳定性结论必须来自多次、跨日期样本。'] },
         { heading: '测评边界', paragraphs: ['Codex 的网络表现不能只用网页测速代替。真实记录应包含命令类型、任务时长、工具版本、网络环境和失败次数，并将账号权限、模型额度等非网络因素单独标记。'] },
       ],
-      sources: [{ label: 'OpenAI Codex 官方文档', url: 'https://developers.openai.com/codex/' }],
     },
   },
   {
@@ -127,7 +123,6 @@ export const aiPlatforms: AiPlatform[] = [
         { heading: 'AI Studio 需要额外检查', paragraphs: ['AI Studio 还涉及开发者项目、API 密钥、配额和组织设置。页面能打开但模型请求失败时，分别检查项目权限、配额、API 域名与网络日志。', '公开截图时遮挡密钥、项目编号和账户信息；不要把密钥复制到第三方诊断页。'] },
         { heading: '记录可复查结果', paragraphs: ['写清产品入口、浏览器或客户端、出口地区、账号条件、时间、错误文本和重复次数。结论应限定到测试条件，并链接官方支持地区页面。'] },
       ],
-      sources: [{ label: 'Google AI for Developers 可用地区', url: 'https://ai.google.dev/gemini-api/docs/available-regions' }, { label: 'Google Gemini 帮助中心', url: 'https://support.google.com/gemini/' }],
     },
   },
   {
@@ -149,7 +144,6 @@ export const aiPlatforms: AiPlatform[] = [
         { heading: '检查登录与会话状态', paragraphs: ['若网页能打开但模型请求失败，先退出多余会话、检查浏览器缓存和系统时间，再固定单一出口重试。不要在多个地区节点之间快速切换，以免把会话风控和网络问题混在一起。'] },
         { heading: '记录失败样本', paragraphs: ['至少记录页面错误、请求是否开始、流式输出是否中断、网络类型和测试时间。只有多日重复结果才能说明某个条件下的稳定性。'] },
       ],
-      sources: [{ label: 'xAI 官方文档', url: 'https://docs.x.ai/' }],
     },
   },
   {
@@ -171,7 +165,6 @@ export const aiPlatforms: AiPlatform[] = [
         { heading: '固定出口后逐项验证', paragraphs: ['先用一个固定节点测试网页，再测试短问题、长回答和引用打开。若只在长回答中断，优先检查丢包、连接重置和客户端超时。'] },
         { heading: 'App 的额外变量', paragraphs: ['移动端还要检查系统代理、蜂窝网络切换、应用版本和后台网络权限。截图或日志中遮挡账户与设备标识。'] },
       ],
-      sources: [{ label: 'Perplexity 帮助中心', url: 'https://www.perplexity.ai/help-center' }],
     },
   },
   {
@@ -194,7 +187,6 @@ export const aiPlatforms: AiPlatform[] = [
         { heading: '区分网络错误和权限错误', paragraphs: ['超时、DNS、TLS 和连接重置属于网络层；403、配额不足和地区提示属于权限或政策层。记录 HTTP 状态、错误字段和发生时间。'] },
         { heading: '把地区结论写成日期化记录', paragraphs: ['官方可用地区会变化，文章需显示核验日期，并链接 Google 官方文档。没有当天证据时，使用“需以官方页面为准”，不要承诺固定地区。'] },
       ],
-      sources: [{ label: 'Google AI for Developers 可用地区', url: 'https://ai.google.dev/gemini-api/docs/available-regions' }],
     },
   },
   {
@@ -216,7 +208,6 @@ export const aiPlatforms: AiPlatform[] = [
         { heading: 'IDE 与浏览器路径不同', paragraphs: ['浏览器能打开 GitHub，不代表 IDE 的扩展进程能够连接。检查 IDE 代理设置、扩展日志、系统证书和企业 TLS 检查。'] },
         { heading: '企业网络需要管理员配合', paragraphs: ['遇到证书替换、代理认证或域名白名单问题，应让网络管理员确认允许的域名和证书链。不要自行关闭证书验证。'] },
       ],
-      sources: [{ label: 'GitHub Copilot 文档', url: 'https://docs.github.com/en/copilot' }],
     },
   },
 ];

@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import GuideCard from '../components/GuideCard.astro';
 import ProviderCard from '../components/ProviderCard.astro';
+import AffiliateDisclosure from '../components/AffiliateDisclosure.astro';
 import { providers } from '../data/providers';
 import { site } from '../data/site';
 
@@ -21,7 +22,7 @@ const jsonLd = [
       <div class="hero-copy">
         <p class="eyebrow">AIRPORT GUIDE · REVIEW NOTES</p>
         <h1>机场推荐排行｜<br /><em>梯子推荐、翻墙VPN与科学上网指南</em></h1>
-        <p class="hero-lede">按便宜机场、稳定机场与性价比 VPN 等需求整理选购信息，公开价格来源和测评条件。当前没有可复核实测样本的分类会标明暂未排名，不用宣传资料替代真实结果。</p>
+        <p class="hero-lede">围绕机场推荐、梯子推荐、翻墙 VPN、科学上网和性价比选择整理原创指南。没有可复核实测样本的分类会标明暂未排名，不用宣传资料替代真实结果。</p>
         <div class="hero-actions">
           <a class="button button-primary" href="/providers/">查看机场列表 <span aria-hidden="true">→</span></a>
           <a class="button button-outline" href="/rankings/">查看分类排行</a>
@@ -30,7 +31,7 @@ const jsonLd = [
       <aside class="hero-card" aria-label="资料状态">
         <div class="hero-card-top"><span>REVIEW STANDARD / 01</span><span class="dot-status">先核来源，再看实测</span></div>
         <ul class="signal-list">
-          <li><span class="signal-number">01</span><div><strong>机场资料看来源</strong><small>第三方目录、商家自述与编辑核验分别标注。</small></div></li>
+          <li><span class="signal-number">01</span><div><strong>机场资料独立整理</strong><small>服务商入口与博客文章分开呈现，注册页信息不等于测评结论。</small></div></li>
           <li><span class="signal-number">02</span><div><strong>测评条件可复查</strong><small>记录设备、网络、时段、样本和失败情况。</small></div></li>
           <li><span class="signal-number">03</span><div><strong>样本不足不排名</strong><small>没有有效记录时标为未评分，不用宣传语代替实测。</small></div></li>
         </ul>
@@ -38,12 +39,12 @@ const jsonLd = [
     </div>
   </section>
   <section class="notice-band">
-    <div class="wrap notice-inner"><strong>推荐说明</strong><p>便宜机场、稳定机场和性价比 VPN 使用不同比较口径。尚无足够实测记录的分类会标注“暂未排名”；目录快照只提供价格线索，不代表本站实测或质量背书。</p></div>
+    <div class="wrap notice-inner"><strong>推荐说明</strong><p>便宜机场、稳定机场和性价比 VPN 使用不同比较口径。尚无足够实测记录的分类会标注“暂未排名”；注册入口不代表本站对服务质量作出保证。</p></div>
   </section>
   <section class="section wrap">
     <div class="section-heading"><div><p class="eyebrow">AIRPORT LIST / 01</p><h2>机场列表、机场推荐与 VPN 分类排行</h2><p>从机场列表进入机场推荐、便宜机场、稳定机场与性价比 VPN 分类；先看比较口径和证据状态，再决定哪些选项适合自己的预算与设备。</p></div></div>
     <div class="card-grid topic-hub-grid">
-      <article class="guide-card"><p class="card-kicker">AIRPORT LIST</p><h2><a href="/providers/">机场列表</a></h2><p>查看机场服务条目、第三方公开价格线索、注册链接状态和来源说明。</p><a class="text-link" href="/providers/">查看机场列表 →</a></article>
+      <article class="guide-card"><p class="card-kicker">AIRPORT LIST</p><h2><a href="/providers/">机场列表</a></h2><p>查看机场服务商资料卡、注册入口和购买前核对事项。</p><a class="text-link" href="/providers/">查看机场列表 →</a></article>
       <article class="guide-card"><p class="card-kicker">LADDER / VPN GUIDE</p><h2><a href="/tizi/">梯子推荐与翻墙 VPN 推荐</a></h2><p>区分机场服务与 VPN 产品，按设备、预算、条款及当地适用规则核对选择条件。</p><a class="text-link" href="/tizi/">阅读梯子与 VPN 指南 →</a></article>
       <article class="guide-card"><p class="card-kicker">AIRPORT & VPN RANKINGS</p><h2><a href="/rankings/">机场排行：便宜、稳定与综合分类</a></h2><p>查看便宜机场、稳定机场、性价比 VPN 等分类的评测口径与当前实测状态。</p><a class="text-link" href="/rankings/">查看分类排行 →</a></article>
       <article class="guide-card"><p class="card-kicker">CLIENTS</p><h2><a href="/clients/">客户端使用教程</a></h2><p>按系统和订阅格式了解规则、系统代理、TUN、DNS 与日志检查。</p><a class="text-link" href="/clients/">查看客户端 →</a></article>
@@ -63,17 +64,18 @@ const jsonLd = [
   <section class="section" style="background:#edf1ea">
     <div class="wrap">
       <div class="section-heading">
-        <div><p class="eyebrow">DIRECTORY NOTES / 02</p><h2>服务商资料，先看来源和限制</h2><p>以下价格是第三方公开页面的记录，不是实时商家报价。点击查看每项数据的来源日期和入口状态。</p></div>
-        <a class="text-link" href="/providers/">查看资料目录 <span aria-hidden="true">→</span></a>
+        <div><p class="eyebrow">PROVIDER NOTES / 02</p><h2>服务商资料，先看入口和限制</h2><p>以下资料卡由本站整理注册入口和购买前核对事项，不发布未经核实的价格或服务表现。</p></div>
+        <a class="text-link" href="/providers/">查看机场列表 <span aria-hidden="true">→</span></a>
       </div>
+      <AffiliateDisclosure />
       <div class="card-grid">{featuredProviders.map((provider) => <ProviderCard provider={provider} />)}</div>
-      <p class="home-source">来源：<a href="https://clash-jichang.com/airport/" target="_blank" rel="nofollow noopener noreferrer">clash-jichang.com/airport</a>。该目录页面标注最近更新于 2026-10-25；本站页面复核于 2026-10-29。各服务商价格与条款均未由本站直接确认。</p>
+      <p class="home-source">本站仅整理名称、注册入口和购买前核对事项；套餐价格、服务条款和服务表现请以注册后的页面及你自己的测试为准。</p>
     </div>
   </section>
   <section class="section wrap">
     <div class="section-heading"><div><p class="eyebrow">HOW WE READ / 03</p><h2>一条信息，四种状态</h2><p>读者可以分辨来源类型，避免把广告用语误读成独立结论。</p></div></div>
     <div class="split-panel">
-      <article class="info-panel"><h3>资料来源分层</h3><p>服务商自述、第三方目录和独立测试记录分别标注。价格、入口与条款附来源和核验时间，避免把页面宣传误读成独立结论。</p><a class="text-link" href="/providers/">查看资料与来源 <span aria-hidden="true">→</span></a></article>
+      <article class="info-panel"><h3>博客内容独立整理</h3><p>文章按选购问题、客户端和网络故障组织，注册入口单独披露推广关系，不把广告用语写成独立测试结论。</p><a class="text-link" href="/about/">了解本站定位 <span aria-hidden="true">→</span></a></article>
       <article class="info-panel accent"><h3>测评结果可复核</h3><p>每项服务表现结论都应列明设备、网络、测试窗口、样本和证据；评分采用固定口径，并呈现失败样本与适用限制。</p><a class="text-link" href="/methodology/">查看测评方法 <span aria-hidden="true">→</span></a></article>
     </div>
   </section>
