@@ -31,6 +31,7 @@ const safeSchema = (value: Record<string, unknown>) => JSON.stringify(value).rep
     <meta name="description" content={description} />
     {keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
     <link rel="canonical" href={canonical} />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link rel="icon" type="image/svg+xml" href="/icon.svg" />
     {noindex && <meta name="robots" content="noindex,follow" />}
     <meta property="og:type" content={type === 'article' ? 'article' : 'website'} />

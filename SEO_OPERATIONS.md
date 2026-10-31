@@ -17,7 +17,7 @@
 
 1. 确认站点拥有者已控制 `jichangzhan.com`，启用 HTTPS，并将其他主机名永久重定向到 `https://jichangzhan.com`。
 2. 在 Bing Webmaster Tools 验证站点所有权；使用账户当前提供的 DNS、文件或其他验证方式。
-3. 提交 `https://jichangzhan.com/sitemap-index.xml`，检查 sitemap 读取状态和重要 URL 的抓取/索引诊断。
+3. 提交 `https://jichangzhan.com/sitemap.xml`，检查 sitemap 读取状态和重要 URL 的抓取/索引诊断。
 4. 抽查首页、AI、客户端、故障、问答、入门指南及 `/methodology/` 等 canonical 页面，确认返回 200、HTML 正文可见、robots 未误拦截且 canonical 正确。
 5. 发布或删除内容后按实际改动更新 sitemap 和日期；出现重定向、404 或过期数据时，先修正来源与目标，再请求重新抓取。
 6. 每周检查技术错误；每 28 天回顾查询、曝光、点击、索引和可用的 AI 引用报告。样本量不足时只记录现象，不解释成稳定趋势。
@@ -35,7 +35,7 @@ IndexNow 通知需要在站点根目录发布 UTF-8 密钥文件，并以密钥�
 - 首页与重要内容的 HTML 源码包含标题、描述、正文、内部链接与 JSON-LD。
 - 规范域名的 HTTPS 证书有效；`www`、HTTP 和其他已拥有主机名按单跳 301 到规范 URL。
 - 首页和有效页面返回 200；不存在的路径返回真正的 404，而不是带 200 的软 404。
-- sitemap 只包含规范、可索引的 200 页面；`/rankings/`、`/providers/`、`/data/` 和 `/contact/` 使用 noindex 且从 sitemap 排除；`lastmod` 仅在实质内容变化时变更。
+- sitemap 只包含规范、可索引的 200 页面；服务商详情、`/data/` 和 `/contact/` 使用 noindex 且从 sitemap 排除，`/providers/` 列表页保留收录；`lastmod` 仅在实质内容变化时变更。
 - robots 文件可访问，未阻止 CSS、重要页面或 Bingbot；`noindex` 页面不出现在 sitemap。
 - 手机版键盘焦点可见、导航可滚动、表格可横向浏览、对比度可读；加载无需第三方字体或分析脚本。
 - 按托管平台文档验证响应安全头、自动备份、访问日志保留和 404 配置。
