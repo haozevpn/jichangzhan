@@ -5,5 +5,5 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Cross-Origin-Opener-Policy: same-origin
 
-/providers/*
+/providers/*/
   X-Robots-Tag: noindex, follow
