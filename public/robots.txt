@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jichangzhan.com/sitemap-index.xml

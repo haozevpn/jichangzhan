@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EditorialIndex from '../../components/EditorialIndex.astro';
+import { aiPlatforms } from '../../data/editorial';
+
+const items = aiPlatforms.map((platform) => ({
+  title: platform.name,
+  description: platform.summary,
+  category: `${platform.vendor} · AI 网络指南`,
+  keywords: platform.keywords,
+  href: `/ai/${platform.slug}/network/`,
+}));
+---
+
+<BaseLayout title="AI 工具网络指南" description="按 Claude、ChatGPT、Codex、Gemini 等工具整理地区支持、出口 IP、浏览器与终端代理、连接错误和测试边界。" keywords={['Claude 网络环境', 'ChatGPT 网络错误', 'Codex CLI 代理', 'Gemini 地区不可用', 'Grok 网络问题', 'AI 工具无法访问']}>
+  <EditorialIndex title="AI 工具网络指南" description="区分平台政策、账户条件、浏览器与命令行网络路径。先确认产品入口与错误类型，再按最小步骤排查；不要把一次连接成功写成长期可用承诺。" eyebrow="AI TOOLS / NETWORK NOTES" items={items} label="AI 平台专题" />
+</BaseLayout>

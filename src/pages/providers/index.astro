@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import PageIntro from '../../components/PageIntro.astro';
+import ProviderCard from '../../components/ProviderCard.astro';
+import SourceNote from '../../components/SourceNote.astro';
+import { providers } from '../../data/providers';
+---
+
+<BaseLayout title="机场列表｜服务商与套餐资料" description="机场列表整理第三方公开目录中的机场服务条目、套餐价格快照、来源和注册入口核验状态；不含本站实测或推荐排名。">
+  <Breadcrumbs items={[{ label: '首页', href: '/' }, { label: '机场列表' }]} />
+  <PageIntro eyebrow="AIRPORT LIST / 资料索引" title="机场列表" lead="此页提供来源透明的第三方目录快照，方便读者查看机场服务名称与报价线索。价格、服务条款和入口尚未由本站直接向服务商核实，因此不代表推荐、当前可售价格或服务质量结论。" />
+  <section class="list-section wrap">
+    <SourceNote />
+    <div class="list-intro"><h2>机场目录条目 · {providers.length}</h2><p>价格与入口标注来源；服务表现结论按具体测试记录发布。</p></div>
+    <div class="provider-grid">{providers.map((provider) => <ProviderCard provider={provider} />)}</div>
+  </section>
+</BaseLayout>

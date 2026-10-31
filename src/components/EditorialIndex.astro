@@ -1,0 +1,33 @@
+---
+import Breadcrumbs from './Breadcrumbs.astro';
+import EditorialCard from './EditorialCard.astro';
+import PageIntro from './PageIntro.astro';
+
+const { title, description, eyebrow, items, label } = Astro.props;
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: title,
+  description,
+  inLanguage: 'zh-CN',
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.title,
+      url: new URL(item.href, 'https://jichangzhan.com').toString(),
+    })),
+  },
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, '\\u003c')} />
+<Breadcrumbs items={[{ label: '首页', href: '/' }, { label }]} />
+<PageIntro eyebrow={eyebrow} title={title} lead={description} />
+<section class="list-section wrap">
+  <div class="list-intro"><h2>{label} · {items.length} 篇</h2><p>按具体问题分类；来源与适用范围见文章正文。</p></div>
+  <div class="card-grid editorial-grid">
+    {items.map((item) => <EditorialCard {...item} />)}
+  </div>
+</section>

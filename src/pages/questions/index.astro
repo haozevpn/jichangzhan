@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EditorialIndex from '../../components/EditorialIndex.astro';
+import { questionArticles } from '../../data/editorial';
+
+const items = questionArticles.map((article) => ({ title: article.title, description: article.description, category: article.category, keywords: article.keywords, href: `/questions/${article.slug}/` }));
+---
+
+<BaseLayout title="网络与机场问题中心" description="围绕客户端选择、AI 平台地区提示、终端代理、设备限制与订阅问题给出直接答案和核验步骤。" keywords={['机场问题怎么办', 'ChatGPT 网络问题', 'Gemini 地区不可用', '安卓代理客户端', '机场设备数超限']}>
+  <EditorialIndex title="问题中心" description="先读每个问题上方的直接答案，再按文章步骤核对条件。遇到账户政策、付款、地区支持或产品权限问题，优先查看平台与服务商当前官方说明。" eyebrow="QUESTIONS / DIRECT ANSWERS" items={items} label="常见问题" />
+</BaseLayout>

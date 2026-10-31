@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EditorialIndex from '../../components/EditorialIndex.astro';
+import { tiziArticles } from '../../data/editorial';
+
+const items = tiziArticles.map((article) => ({ title: article.title, description: article.description, category: article.category, keywords: article.keywords, href: `/tizi/${article.slug}/` }));
+---
+
+<BaseLayout title="梯子推荐、翻墙VPN与科学上网指南" description="梯子推荐、翻墙VPN推荐与科学上网选购指南，解释机场订阅、VPN 产品、客户端、价格和隐私条款；按设备、预算及适用规则核对条件，不承诺未经测试的速度或可用性。" keywords={['梯子推荐', '翻墙VPN推荐', '科学上网', '科学上网工具', '翻墙VPN', '性价比VPN', 'VPN选购指南', '机场节点', '机场订阅', '梯子怎么选']}>
+  <EditorialIndex title="梯子推荐、翻墙VPN与科学上网指南" description="从基础概念、服务条款和客户端条件开始比较网络代理产品。梯子推荐与科学上网工具选择应基于设备、预算、隐私需求和可复核证据；使用前请遵守适用法律及相关平台条款。" eyebrow="LADDER & VPN / START HERE" items={items} label="入门文章" />
+</BaseLayout>

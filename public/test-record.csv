@@ -1,0 +1,1 @@
+service_slug,plan,purchase_or_gift,device,os_version,client_version,region,network_type,carrier,test_date_local,time_window,tool,tool_version,endpoint,sample_count,latency_median_ms,throughput_median_mbps,packet_loss_percent,disconnect_count,local_baseline,source_evidence_path,limitations,reviewer,privacy_scrubbed

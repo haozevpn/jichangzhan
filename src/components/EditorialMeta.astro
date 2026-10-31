@@ -1,0 +1,11 @@
+---
+const { publishedAt, updatedAt, category, revisionNote } = Astro.props;
+---
+
+<div class="editorial-meta" aria-label="文章信息">
+  <span>{category}</span>
+  <span>内容整理：机场站</span>
+  <span>内容日期：{publishedAt}</span>
+  <span>修订摘要：{revisionNote}</span>
+  {updatedAt !== publishedAt && <span>最近修订：{updatedAt}</span>}
+</div>

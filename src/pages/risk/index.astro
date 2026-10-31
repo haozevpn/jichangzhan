@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EditorialIndex from '../../components/EditorialIndex.astro';
+import { riskArticles } from '../../data/editorial';
+
+const items = riskArticles.map((article) => ({ title: article.title, description: article.description, category: article.category, keywords: article.keywords, href: `/risk/${article.slug}/` }));
+---
+
+<BaseLayout title="机场服务风险预警与付款检查" description="了解付款周期、入口变更、退款条款、账号与订阅凭证保护等消费风险，建立购买前后的留证清单。" keywords={['机场跑路怎么判断', '机场服务风险', '机场退款', '机场入口核验', '机场订阅泄露']}>
+  <EditorialIndex title="风险预警与付款检查" description="风险提示用于提醒读者核验事实，不是对某家服务商的定性。出现入口、付款主体、条款或服务状态变化时，先保留来源和时间，再按可核实信息调整付款决策。" eyebrow="RISK NOTES / CONSUMER CHECKS" items={items} label="风险专题" />
+</BaseLayout>

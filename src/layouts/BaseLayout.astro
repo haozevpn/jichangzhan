@@ -1,0 +1,110 @@
+---
+import '../styles/global.css';
+import { navigation, site } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  keywords?: string[];
+  datePublished?: string;
+  dateModified?: string;
+  type?: 'website' | 'article';
+}
+
+const { title, description, noindex = false, jsonLd, keywords = [], datePublished, dateModified, type = 'website' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, site.origin).toString();
+const pageTitle = title === site.title ? title : `${title}｜${site.name}`;
+const schemas = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
+const currentPath = Astro.url.pathname;
+const safeSchema = (value: Record<string, unknown>) => JSON.stringify(value).replace(/</g, '\\u003c');
+---
+
+<!doctype html>
+<html lang={site.locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#102724" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    {keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    {noindex && <meta name="robots" content="noindex,follow" />}
+    <meta property="og:type" content={type === 'article' ? 'article' : 'website'} />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {datePublished && <meta property="article:published_time" content={datePublished} />}
+    {dateModified && <meta property="article:modified_time" content={dateModified} />}
+    {schemas.map((schema) => <script type="application/ld+json" set:html={safeSchema(schema)} />)}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到正文</a>
+    <header class="site-header">
+      <div class="header-inner wrap">
+        <a class="brand" href="/" aria-label={`${site.name} 首页`}>
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span class="brand-copy"><strong>{site.name}</strong><small>机场列表 · 推荐排行</small></span>
+        </a>
+        <nav class="main-nav" aria-label="主导航">
+          {navigation.map((item) => (
+            <a href={item.href} aria-current={currentPath === item.href || currentPath.startsWith(item.href) ? 'page' : undefined}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </header>
+    <main id="main"><slot /></main>
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div class="footer-brand">
+          <a class="brand brand-light" href="/">
+            <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+            <span class="brand-copy"><strong>{site.name}</strong><small>先核来源，再看结论</small></span>
+          </a>
+          <p>服务商自述、第三方目录和编辑判断分开呈现。未核实的资料不会包装成实测结果。</p>
+        </div>
+        <div>
+          <h2>内容专题</h2>
+          <a href="/guides/">机场推荐</a>
+          <a href="/tizi/">梯子推荐 / 翻墙VPN</a>
+          <a href="/rankings/">机场排行</a>
+          <a href="/providers/">机场列表</a>
+          <a href="/clients/">客户端教程</a>
+          <a href="/network/">网络排查</a>
+        </div>
+        <div>
+          <h2>阅读与方法</h2>
+          <a href="/tizi/">梯子指南</a>
+          <a href="/guides/">机场推荐指南</a>
+          <a href="/risk/">风险预警</a>
+          <a href="/methodology/">测试方法</a>
+          <a href="/rankings/">推荐依据</a>
+        </div>
+        <div>
+          <h2>本站信息</h2>
+          <a href="/about/">关于本站</a>
+          <a href="/editorial-policy/">编辑规范</a>
+          <a href="/disclosure/">商业披露</a>
+          <a href="/corrections/">纠错流程</a>
+        </div>
+        <div>
+          <h2>条款</h2>
+          <a href="/contact/">联系与纠错入口</a>
+          <a href="/privacy/">隐私说明</a>
+          <a href="/terms/">使用条款</a>
+        </div>
+      </div>
+      <div class="wrap footer-bottom">
+        <span>© {new Date().getFullYear()} {site.name}</span>
+        <span>面向服务合法可用地区的消费信息；请遵守当地规则与服务条款。</span>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+---
+
+<BaseLayout title="公开测试数据" description="说明测试记录字段、隐私清理和数据解释范围；仅发布完成复核的脱敏摘要。" noindex={true}>
+  <Breadcrumbs items={[{ label: '首页', href: '/' }, { label: '公开测试数据' }]} />
+  <article class="prose wrap policy-page">
+    <p class="eyebrow">DATA / TEST RECORDS</p>
+    <h1>公开测试数据</h1>
+    <div class="policy-aside"><strong>数据口径：</strong>公开摘要需保留测试条件、样本量和方法边界，并与供应商资料、读者反馈分栏呈现。</div>
+    <h2>记录字段</h2>
+    <p>测试表记录套餐取得方式、设备和系统、客户端版本、地区、网络类型和运营商、测试日期及时段、工具和端点、样本数、延迟中位数、吞吐中位数、丢包、断连、本地基线、证据位置、限制和隐私清理状态。空白字段不会用推测值补齐。空白 CSV 模板见 <a href="/test-record.csv">测试记录表</a>。</p>
+    <h2>隐私清理</h2>
+    <p>公开前会删除账户名、订阅令牌、完整 IP、订单号、邮箱、精确住址和其他可识别个人或网络的信息。若清理会破坏结论可复查性，将只发布摘要并说明限制，不公开敏感原始材料。</p>
+    <h2>数据使用限制</h2>
+    <p>测试只描述特定条件下的观测，不能推导所有用户的体验或未来服务状态。数据发布后会记录修订、更正和方法变更，并链接到对应测试方法页。模板是空表，不包含示例成绩。</p>
+  </article>
+</BaseLayout>

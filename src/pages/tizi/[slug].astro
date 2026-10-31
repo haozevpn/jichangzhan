@@ -1,0 +1,13 @@
+---
+import EditorialArticlePage from '../../components/EditorialArticlePage.astro';
+import { tiziArticles } from '../../data/editorial';
+
+export function getStaticPaths() {
+  return tiziArticles.map((article) => ({ params: { slug: article.slug }, props: { article } }));
+}
+
+const { article } = Astro.props;
+const related = tiziArticles.filter((item) => item.slug !== article.slug).slice(0, 6).map((item) => ({ title: item.title, href: `/tizi/${item.slug}/` }));
+---
+
+<EditorialArticlePage article={article} sectionUrl="/tizi/" sectionLabel="梯子指南" related={related} />

@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import PageIntro from '../../components/PageIntro.astro';
+
+const jsonLd = { '@context': 'https://schema.org', '@type': 'WebPage', name: '测试方法与评分规则', inLanguage: 'zh-CN' };
+---
+
+<BaseLayout title="测试方法与评分规则" description="说明网络线路服务的测试条件、样本记录、延迟与吞吐统计、评分权重、证据置信度及适用限制。" jsonLd={jsonLd}>
+  <Breadcrumbs items={[{ label: '首页', href: '/' }, { label: '测试方法' }]} />
+  <PageIntro eyebrow="METHODOLOGY / VERSION 0.2" title="测试方法与评分规则" lead="每项测试结论都应能还原到设备、网络、时段和样本。以下流程说明数据如何采集、汇总和解释；供应商自述、目录资料与编辑观察分别标注。" />
+  <section class="method-layout wrap">
+    <div>
+      <article class="method-card">
+        <h2>测试前：记录条件与利益关系</h2>
+        <p>每次测试先记服务商、套餐、购买或赠送情况、设备型号、系统与客户端版本、所在大致地区、网络运营商、日期、时段、工具和目标端点。读者不需要看到账户名、令牌、完整 IP 或付款个人资料；公开证据前会先做隐私清理。</p>
+      </article>
+      <article class="method-card" style="margin-top:13px">
+        <h2>测试中：先看本地基线，再重复采样</h2>
+        <p>尽量安排至少三个不同日期，覆盖忙时和闲时；资源允许时增加独立网络环境。测试前记录本地网络基线，避免把本地 Wi-Fi、设备或运营商故障误归因给服务。每项结果注明样本数、失败次数、工具版本和取样时间。</p>
+        <ul>
+          <li>记录延迟中位数与分布，不用单个最低值概括体验。</li>
+          <li>记录吞吐量样本、丢包、断连与连续使用中断。</li>
+          <li>将套餐、支付、退款、设备限制和隐私条款作为单独核验项。</li>
+          <li>给出地区、网络、设备和时段的范围，不推断所有用户都会得到相同结果。</li>
+        </ul>
+      </article>
+      <article class="method-card" style="margin-top:13px">
+        <h2>结果发布：可复查、有日期、有边界</h2>
+        <p>页面会区分原始观测、供应商自述、编辑判断和读者反馈。样本不足时不产出高分或“稳定”结论。测试报告保留去标识后的汇总数据与修订摘要；发现错误时通过纠错入口登记并说明改动。</p>
+      </article>
+    </div>
+    <aside>
+      <article class="method-card">
+        <h2>拟定评分权重</h2>
+        <p>这组权重在实际测试开始前公开锁定，不能为某家服务临时调整。没有足够样本或条款证据的项目标为“不可评分”。</p>
+        <ul class="weight-list">
+          <li><span>稳定性 / 可用率</span><strong>25</strong></li>
+          <li><span>延迟与吞吐表现</span><strong>20</strong></li>
+          <li><span>断连与丢包</span><strong>15</strong></li>
+          <li><span>价格价值</span><strong>15</strong></li>
+          <li><span>资料透明度与条款</span><strong>10</strong></li>
+          <li><span>设备兼容性</span><strong>10</strong></li>
+          <li><span>客服与退款体验</span><strong>5</strong></li>
+        </ul>
+        <p><strong>合计 100 分。</strong>具体评分须同时展示相应测试记录、核验日期、样本范围和适用限制。</p>
+      </article>
+      <article class="method-card" style="margin-top:13px">
+        <h2>置信度等级</h2>
+        <div class="confidence-list">
+          <div><strong>高</strong><span>≥ 3 个日期、有完整条件和可复查证据，主要条款已由一手来源核验。</span></div>
+          <div><strong>中</strong><span>重复样本可用，但网络环境、时间覆盖或部分条款存在限制。</span></div>
+          <div><strong>低 / 未评分</strong><span>单次或第三方目录信息，无法支持体验判断；当前目录条目均属此类。</span></div>
+        </div>
+      </article>
+    </aside>
+  </section>
+</BaseLayout>

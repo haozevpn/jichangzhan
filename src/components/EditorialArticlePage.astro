@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import EditorialMeta from './EditorialMeta.astro';
+
+const { article, sectionUrl, sectionLabel, related = [] } = Astro.props;
+const publishedAt = article.publishedAt ?? article.updatedAt;
+const answerSeed = article.answer ?? article.description;
+const answerContext = article.sections.slice(0, 2).flatMap((section) => section.paragraphs);
+let directAnswer = answerSeed;
+for (const paragraph of answerContext) {
+  if (directAnswer.length >= 150) break;
+  if (paragraph && !directAnswer.includes(paragraph)) directAnswer += ` ${paragraph}`;
+}
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: article.title,
+  description: article.description,
+  keywords: article.keywords,
+  datePublished: publishedAt,
+  dateModified: article.updatedAt,
+  inLanguage: 'zh-CN',
+  author: { '@type': 'Organization', name: '机场站' },
+  publisher: { '@type': 'Organization', name: '机场站', url: 'https://jichangzhan.com' },
+  mainEntityOfPage: new URL(Astro.url.pathname, 'https://jichangzhan.com').toString(),
+};
+const jsonLd = article.answer
+  ? [articleSchema, {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [{
+        '@type': 'Question',
+        name: article.title,
+        acceptedAnswer: { '@type': 'Answer', text: article.answer },
+      }],
+    }]
+  : articleSchema;
+---
+
+<BaseLayout title={article.title} description={article.description} keywords={article.keywords} datePublished={publishedAt} dateModified={article.updatedAt} type="article" jsonLd={jsonLd}>
+  <div class="article-head wrap">
+    <Breadcrumbs items={[{ label: '首页', href: '/' }, { label: sectionLabel, href: sectionUrl }, { label: article.title }]} />
+    <header class="prose">
+      <p class="eyebrow">{article.category}</p>
+      <h1>{article.title}</h1>
+      <p class="lede">{article.description}</p>
+      <EditorialMeta publishedAt={publishedAt} updatedAt={article.updatedAt} category={article.category} revisionNote="依据公开资料整理；服务表现结论以文章列明的测试记录为准。" />
+    </header>
+  </div>
+  <article class="article-body wrap">
+    <div class="article-content prose">
+      <aside class="direct-answer"><strong>{article.answer ? '直接回答' : '先看结论'}</strong><p>{directAnswer}</p></aside>
+      <nav class="article-toc" aria-label="文章目录">
+        <strong>本文内容</strong>
+        <ol>{article.sections.map((section, index) => <li><a href={`#section-${index + 1}`}>{section.heading}</a></li>)}</ol>
+      </nav>
+      {article.sections.map((section, index) => (
+        <section>
+          <h2 id={`section-${index + 1}`}>{section.heading}</h2>
+          {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+          {section.bullets && <ul>{section.bullets.map((bullet) => <li>{bullet}</li>)}</ul>}
+        </section>
+      ))}
+      <p class="article-limits">适用范围：平台规则、客户端版本、网络环境和服务条款可能变化。操作前请核对对应官方资料；本文提供的是排查与比较方法，不构成特定服务的可用性承诺。</p>
+    </div>
+    {article.sources?.length > 0 && <aside class="article-sources"><h2>一手资料入口</h2><p>政策、版本和支持范围以来源页面当前内容为准；本文不把第三方宣传表述当作独立测试结论。</p><ul>{article.sources.map((source) => <li><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label} ↗</a></li>)}</ul></aside>}
+  </article>
+  {related.length > 0 && <section class="related-reading"><div class="wrap"><h2>继续阅读</h2><div class="related-list">{related.slice(0, 6).map((item) => <a href={item.href}>{item.title}</a>)}</div></div></section>}
+</BaseLayout>

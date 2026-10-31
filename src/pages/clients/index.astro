@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EditorialIndex from '../../components/EditorialIndex.astro';
+import { clientGuides } from '../../data/editorial';
+
+const items = clientGuides.map((client) => ({
+  title: `${client.name} 使用指南`,
+  description: client.summary,
+  category: `客户端教程 · ${client.platforms}`,
+  keywords: client.keywords,
+  href: `/clients/${client.slug}/`,
+}));
+---
+
+<BaseLayout title="客户端教程" description="按平台整理 Clash Verge Rev、Mihomo、Shadowrocket、v2rayN、sing-box、Stash 与 Surge 的导入、分流和故障排查。" keywords={['Clash Verge Rev 教程', 'Mihomo 配置', 'Shadowrocket 导入订阅', 'v2rayN 教程', 'sing-box 配置', 'Stash 教程', 'Surge 教程']}>
+  <EditorialIndex title="客户端教程" description="客户端是否适用取决于系统版本、订阅格式和功能需求。每篇按官方发布渠道、导入流程、系统代理、TUN、DNS 与日志顺序说明，版本变化时以项目文档为准。" eyebrow="CLIENTS / SETUP & TROUBLESHOOTING" items={items} label="客户端" />
+</BaseLayout>

@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EditorialIndex from '../../components/EditorialIndex.astro';
+import { networkArticles } from '../../data/editorial';
+
+const items = networkArticles.map((article) => ({ title: article.title, description: article.description, category: article.category, keywords: article.keywords, href: `/network/${article.slug}/` }));
+---
+
+<BaseLayout title="网络故障排查" description="订阅更新失败、节点超时、DNS、TLS、速度变慢和 AI 工具连接问题的分层排查指南。" keywords={['节点超时怎么办', '订阅更新失败', 'DNS 错误', 'TLS handshake failed', '机场速度变慢', '客户端开启后没网']}>
+  <EditorialIndex title="网络故障排查" description="从错误出现的位置开始：先检查本地网络，再检查客户端、解析与代理路径，最后核对服务端状态。每次只改变一个条件，并留下时间、错误码和版本信息。" eyebrow="NETWORK / TROUBLESHOOTING" items={items} label="网络故障" />
+</BaseLayout>

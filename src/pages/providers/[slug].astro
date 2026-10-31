@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import SourceNote from '../../components/SourceNote.astro';
+import { providers, directorySource } from '../../data/providers';
+
+export function getStaticPaths() {
+  return providers.map((provider) => ({ params: { slug: provider.slug }, props: { provider } }));
+}
+
+const { provider } = Astro.props;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: `${provider.name} · 第三方目录资料`,
+  description: `${provider.name}在第三方目录中的价格文字记录和核验状态。`,
+  inLanguage: 'zh-CN',
+};
+---
+
+<BaseLayout title={`${provider.name}资料记录`} description={`${provider.name}的第三方目录信息快照，列明公开页面来源、套餐文字和入口信息的核验范围。`} noindex={true} jsonLd={jsonLd}>
+  <Breadcrumbs items={[{ label: '首页', href: '/' }, { label: '服务商资料', href: '/providers/' }, { label: provider.name }]} />
+  <section class="page-intro wrap">
+    <p class="eyebrow">PROVIDER NOTE / THIRD-PARTY LISTING</p>
+    <h1>{provider.name}：目录资料记录</h1>
+    <p class="lede">这是一个来源摘录页，记录第三方目录当时展示的内容。页面所列套餐和入口需要在服务商官方渠道复核；服务表现结论只会附对应测试条件与记录。</p>
+  </section>
+  <section class="provider-detail wrap">
+    <SourceNote />
+    <div class="provider-detail-grid">
+      <div>
+        <div class="provider-facts">
+          <div class="fact-box"><small>第三方目录中的价格文字</small><strong>{provider.directoryPrice}</strong></div>
+          <div class="fact-box"><small>价格核验状态</small><strong>未向服务商直接核实；不能视为当前报价</strong></div>
+          <div class="fact-box"><small>线路、设备与隐私资料</small><strong>请以服务商当前官方说明为准</strong></div>
+          <div class="fact-box"><small>服务表现说明</small><strong>只在对应测试记录公布后呈现</strong></div>
+        </div>
+        <div class="prose">
+          <h2>资料说明</h2>
+          <p>{provider.record}</p>
+          <p>上述价格文字来自 <a href={directorySource.url} target="_blank" rel="nofollow noopener noreferrer">第三方目录原页</a>。目录页面标注更新于 {directorySource.pageUpdatedAt}；本站查阅日期为 {directorySource.accessedAt}。价格可能已经变化，也可能受套餐周期、流量重置规则、折扣条件或账户资格影响。</p>
+          <h2>适用范围与未核验项</h2>
+          <ul>
+            <li>此条目只用于追溯公开目录中出现过的资料，不说明服务商资质或持续经营状态。</li>
+            <li>线路类型、节点覆盖、速度、晚高峰表现、设备数量、隐私和日志政策、客服响应、退款条件：需分别查验官方条款或测试记录。</li>
+            <li>如商家提供补充资料，需留存带日期的官方来源；收到供应商材料也不等同于独立验证。</li>
+          </ul>
+        </div>
+      </div>
+      <aside class="entry-box">
+        <h2>来源页列出的入口</h2>
+        <p>{provider.linkNote}</p>
+        {provider.entryUrl ? <a href={provider.entryUrl} target="_blank" rel="nofollow noopener noreferrer">{provider.entryHost} ↗</a> : <p class="entry-missing">当前没有本站确认的直达注册地址。</p>}
+        <p>继续前请自行核对浏览器地址栏、商家身份、服务条款和结账价格。此链接不构成本站背书。</p>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,11 @@
+---
+const { title, description, href, category, keywords = [] } = Astro.props;
+---
+
+<article class="guide-card editorial-card">
+  <p class="card-kicker">{category}</p>
+  <h2><a href={href}>{title}</a></h2>
+  <p>{description}</p>
+  {keywords.length > 0 && <p class="topic-tags" aria-label="相关主题">{keywords.slice(0, 3).join(' · ')}</p>}
+  <a class="text-link" href={href}>阅读全文 <span aria-hidden="true">→</span></a>
+</article>

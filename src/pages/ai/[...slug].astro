@@ -1,0 +1,16 @@
+---
+import EditorialArticlePage from '../../components/EditorialArticlePage.astro';
+import { aiPlatforms } from '../../data/editorial';
+
+export function getStaticPaths() {
+  return aiPlatforms.map((platform) => {
+    const article = { ...platform.article, slug: `${platform.slug}/${platform.article.slug}` };
+    return { params: { slug: article.slug }, props: { article } };
+  });
+}
+
+const { article } = Astro.props;
+const related = aiPlatforms.filter((item) => `${item.slug}/${item.article.slug}` !== article.slug).slice(0, 6).map((item) => ({ title: item.article.title, href: `/ai/${item.slug}/${item.article.slug}/` }));
+---
+
+<EditorialArticlePage article={article} sectionUrl="/ai/" sectionLabel="AI 工具" related={related} />

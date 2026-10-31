@@ -1,0 +1,12 @@
+---
+import EditorialArticlePage from '../../components/EditorialArticlePage.astro';
+import { riskArticles } from '../../data/editorial';
+
+export function getStaticPaths() {
+  return riskArticles.map((article) => ({ params: { slug: article.slug }, props: { article } }));
+}
+
+const { article } = Astro.props;
+---
+
+<EditorialArticlePage article={article} sectionUrl="/risk/" sectionLabel="风险预警" />

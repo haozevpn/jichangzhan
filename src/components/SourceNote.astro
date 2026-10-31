@@ -1,0 +1,9 @@
+---
+import { directorySource } from '../data/providers';
+---
+
+<aside class="source-note">
+  <strong>资料状态</strong>
+  <p>服务商价格与入口信息来自第三方目录，不代表商家当前报价，也未由本站向商家核实。页面注明该目录于 {directorySource.pageUpdatedAt} 更新；本站查阅日期为 {directorySource.accessedAt}。</p>
+  <a href={directorySource.url} target="_blank" rel="nofollow noopener noreferrer">查看第三方原始目录 ↗</a>
+</aside>

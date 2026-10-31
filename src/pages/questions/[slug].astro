@@ -1,0 +1,13 @@
+---
+import EditorialArticlePage from '../../components/EditorialArticlePage.astro';
+import { questionArticles } from '../../data/editorial';
+
+export function getStaticPaths() {
+  return questionArticles.map((article) => ({ params: { slug: article.slug }, props: { article } }));
+}
+
+const { article } = Astro.props;
+const related = questionArticles.filter((item) => item.slug !== article.slug).slice(0, 6).map((item) => ({ title: item.title, href: `/questions/${item.slug}/` }));
+---
+
+<EditorialArticlePage article={article} sectionUrl="/questions/" sectionLabel="问题中心" related={related} />

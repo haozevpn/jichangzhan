@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import GuideCard from '../../components/GuideCard.astro';
+import PageIntro from '../../components/PageIntro.astro';
+
+const guides = (await getCollection('guides')).sort((a, b) => a.data.order - b.data.order);
+const categories = [...new Set(guides.map((guide) => guide.data.category))];
+---
+
+<BaseLayout title="机场列表｜机场推荐、便宜机场与稳定机场" description="机场列表与机场推荐指南：比较预算、退款、设备、隐私条款和实测证据，整理便宜机场、稳定机场和性价比VPN相关条目，说明哪些信息已核验、哪些仍待确认。" keywords={['机场列表', '机场推荐', '便宜机场', '稳定机场', '机场推荐新手', '机场怎么选', '好用机场怎么判断', '机场服务测评']}>
+  <Breadcrumbs items={[{ label: '首页', href: '/' }, { label: '机场列表' }]} />
+  <PageIntro eyebrow="AIRPORT LIST / 按需求筛选" title="机场列表：机场推荐先核条件，再看证据" lead="机场列表用于整理机场服务条目，机场推荐不应只看广告语或单次测速。按预算、退款条款、设备兼容、隐私说明和可复查测试逐项筛选；涉及服务表现的结论限定在具体样本和测试条件内。" />
+  <section class="list-section wrap">
+    <div class="list-intro"><h2>全部指南 · {guides.length} 篇</h2><p>按主题整理，来源与适用限制见各篇正文。</p></div>
+    <nav class="guide-categories" aria-label="指南分类">
+      {categories.map((category) => <a href={`#${category.replaceAll(/[\s/]+/g, '-')}`}>{category}</a>)}
+    </nav>
+    {categories.map((category) => (
+      <section class="guide-category-group" id={category.replaceAll(/[\s/]+/g, '-')}>
+        <div class="list-intro"><h2>{category}</h2><p>{guides.filter((guide) => guide.data.category === category).length} 篇</p></div>
+        <div class="guide-list">{guides.filter((guide) => guide.data.category === category).map((guide) => <GuideCard guide={guide} />)}</div>
+      </section>
+    ))}
+  </section>
+</BaseLayout>

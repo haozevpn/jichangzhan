@@ -1,0 +1,13 @@
+---
+import EditorialArticlePage from '../../components/EditorialArticlePage.astro';
+import { networkArticles } from '../../data/editorial';
+
+export function getStaticPaths() {
+  return networkArticles.map((article) => ({ params: { slug: article.slug }, props: { article } }));
+}
+
+const { article } = Astro.props;
+const related = networkArticles.filter((item) => item.slug !== article.slug).slice(0, 6).map((item) => ({ title: item.title, href: `/network/${item.slug}/` }));
+---
+
+<EditorialArticlePage article={article} sectionUrl="/network/" sectionLabel="网络故障" related={related} />

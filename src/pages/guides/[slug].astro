@@ -1,0 +1,53 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import EditorialMeta from '../../components/EditorialMeta.astro';
+import { site } from '../../data/site';
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guides');
+  return guides.map((guide) => ({ params: { slug: guide.id }, props: { guide } }));
+}
+
+const { guide } = Astro.props;
+const { Content, headings } = await render(guide);
+const related = (await getCollection('guides'))
+  .filter((item) => item.id !== guide.id && item.data.category === guide.data.category)
+  .slice(0, 3);
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: guide.data.title,
+  description: guide.data.description,
+  datePublished: guide.data.publishedAt,
+  dateModified: guide.data.updatedAt,
+  inLanguage: 'zh-CN',
+  author: { '@type': 'Organization', name: site.name },
+  publisher: { '@type': 'Organization', name: site.name, url: site.origin },
+  mainEntityOfPage: new URL(`/guides/${guide.id}/`, site.origin).toString(),
+};
+---
+
+<BaseLayout title={guide.data.title} description={guide.data.description} keywords={guide.data.keywords} datePublished={guide.data.publishedAt} dateModified={guide.data.updatedAt} type="article" jsonLd={jsonLd}>
+  <div class="article-head wrap">
+    <Breadcrumbs items={[{ label: '首页', href: '/' }, { label: '机场列表', href: '/guides/' }, { label: guide.data.title }]} />
+    <header class="prose">
+      <p class="eyebrow">{guide.data.category}</p>
+      <h1>{guide.data.title}</h1>
+      <p class="lede">{guide.data.description}</p>
+      <EditorialMeta publishedAt={guide.data.publishedAt} updatedAt={guide.data.updatedAt} category={guide.data.category} revisionNote={guide.data.revisionNote} />
+    </header>
+  </div>
+  <article class="article-body wrap">
+    <div class="article-content prose">
+      <nav class="article-toc" aria-label="文章目录">
+        <strong>本文内容</strong>
+        <ol>{headings.filter((heading) => heading.depth === 2).map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol>
+      </nav>
+      <Content />
+    </div>
+    {guide.data.sources.length > 0 && <aside class="article-sources"><h2>延伸来源</h2><ul>{guide.data.sources.map((source) => <li><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label} ↗</a> · 核验日期：{source.checkedAt}</li>)}</ul></aside>}
+  </article>
+  {related.length > 0 && <section class="related-reading"><div class="wrap"><h2>继续阅读</h2><div class="related-list">{related.map((item) => <a href={`/guides/${item.id}/`}>{item.data.title}</a>)}</div></div></section>}
+</BaseLayout>
