@@ -75,7 +75,7 @@ export const airportTopics: AirportTopic[] = [
         ],
       },
     ],
-    providerSlugs: ['jilianyun', 'guangnianti', 'kexinyun', 'dalaoyun', 'kuaili', 'sujie', 'edgenodes', 'guangsuyun', 'feiniao', 'naiyun'],
+    providerSlugs: ['jilianyun', 'guangnianti', 'kexinyun', 'kuaili', 'sujie', 'edgenodes', 'guangsuyun', 'feiniao', 'shunyun', 'jisucloud'],
     faqs: [
       {
         question: '性价比机场和便宜机场是一回事吗？',
@@ -136,7 +136,7 @@ export const airportTopics: AirportTopic[] = [
         ],
       },
     ],
-    providerSlugs: ['kuaili', 'feimaoyun', 'jisucloud', 'jiuba', 'u1s1', 'weituyun', 'panda', 'liyun', 'ermao', 'nice'],
+    providerSlugs: ['shanhai', 'jinyun', 'jiuyun', 'kuaili', 'jiuba', 'feimaoyun', 'lizione', 'doraemon', 'miaomiao', 'shanshui'],
     faqs: [
       {
         question: '最便宜的机场是哪个？',
@@ -197,7 +197,7 @@ export const airportTopics: AirportTopic[] = [
         ],
       },
     ],
-    providerSlugs: ['flowercloud', 'jilianyun', 'dageyun', 'guangsuyun', 'feiniao', 'longmaoyun', 'huanqiuti', 'liulianyun', 'naiyun', 'bianjie'],
+    providerSlugs: ['flowercloud', 'dageyun', 'feiniao', 'guangnianti', 'nice', 'guangsuyun', 'longmaoyun', 'jilianyun', 'bianjie', 'qingyunti'],
     faqs: [
       {
         question: '老牌机场一定比新机场稳定吗？',
@@ -258,7 +258,7 @@ export const airportTopics: AirportTopic[] = [
         ],
       },
     ],
-    providerSlugs: ['jilianyun', 'guangnianti', 'dalaoyun', 'sujie', 'edgenodes', 'kunpeng', 'shenxing', 'guangsuyun', 'longmaoyun', 'runwaycloud'],
+    providerSlugs: ['jilianyun', 'guangnianti', 'guangsuyun', 'longmaoyun', 'runwaycloud', 'edgex', 'xingdaomeng', 'huanyuyun', 'qingyunti', 'kexinyun'],
     faqs: [
       {
         question: '专线机场和普通（直连/中转）机场有什么区别？',

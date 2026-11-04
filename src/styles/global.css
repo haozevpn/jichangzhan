@@ -278,3 +278,15 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--orange); outlin
 .faq-item dd { margin: 0; color: var(--ink-soft); font-size: 14px; line-height: 1.85; }
 .table-note { margin: 10px 0 18px; color: var(--muted); font-size: 12px; line-height: 1.75; }
 .table-note a { color: var(--green); }
+
+.provider-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 22px; }
+.provider-facts .fact-box small { display: block; color: var(--muted); font-size: 11px; margin-bottom: 4px; }
+.provider-facts .fact-box strong { font-size: 14px; line-height: 1.5; color: var(--ink); }
+.risk-alert { margin: 0 0 22px; padding: 18px 20px; border-radius: 7px; border-left: 4px solid #b42318; background: #fdecea; color: #611a15; }
+.risk-alert.level-high { border-left-color: #c77700; background: #fdf3e7; color: #5a3a12; }
+.risk-alert strong { display: block; font-size: 15px; margin-bottom: 6px; }
+.risk-alert p { margin: 6px 0 0; font-size: 13px; line-height: 1.8; }
+.risk-alert a { color: inherit; font-weight: 700; text-decoration: underline; }
+.risk-alert-links { font-weight: 400 !important; }
+.status-pill-risk { border-color: #f3c0ba !important; color: #b42318 !important; background: #fdecea !important; }
+.provider-card-risk { border-color: #f3c0ba; }

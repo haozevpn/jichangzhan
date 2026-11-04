@@ -2,37 +2,49 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { providers } from '../../data/providers';
+import { providerProfiles, providerWarnings } from '../../data/providerProfiles';
 
 export function getStaticPaths() {
   return providers.map((provider) => ({ params: { slug: provider.slug }, props: { provider } }));
 }
 
 const { provider } = Astro.props;
+const profile = providerProfiles[provider.slug];
+const warning = providerWarnings[provider.slug];
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
   name: `${provider.name} · 服务商资料卡`,
-  description: `${provider.name}的注册入口与本站资料状态。`,
+  description: warning ? `${provider.name}：${warning.summary}（本站风险预警）。` : `${provider.name}的注册入口与本站资料状态。`,
   inLanguage: 'zh-CN',
 };
 ---
 
-<BaseLayout title={`${provider.name}资料卡`} description={`${provider.name}注册入口、资料状态与选购核对事项。本站未发布未经验证的服务表现结论。`} noindex={true} jsonLd={jsonLd}>
+<BaseLayout title={warning ? `${provider.name}${warning.level}预警` : `${provider.name}资料卡`} description={warning ? `${provider.name}${warning.level}预警：${warning.summary}。${provider.name}的风险提示与选购核对事项。` : `${provider.name}注册入口、资料状态与选购核对事项。`} noindex={true} jsonLd={jsonLd}>
   <Breadcrumbs items={[{ label: '首页', href: '/' }, { label: '机场列表', href: '/providers/' }, { label: provider.name }]} />
   <section class="page-intro wrap">
     <p class="eyebrow">PROVIDER PROFILE / 编辑资料卡</p>
-    <h1>{provider.name}：注册入口与选购核对</h1>
-    <p class="lede">本站目前只整理名称和注册入口，没有独立确认套餐价格、服务条款、线路能力或实际体验。此资料卡不构成推荐排名或实测评价。</p>
+    <h1>{provider.name}：{warning ? `${warning.level}预警与风险提示` : '注册入口与选购核对'}</h1>
+    <p class="lede">{warning ? `本站根据公开监测对 ${provider.name} 发出${warning.level}预警。` : `以下整理 ${provider.name} 的注册入口与购买前核对事项。套餐价格、服务条款与线路以服务商页面为准。`}</p>
   </section>
   <section class="provider-detail wrap">
+    {warning && (
+      <div class={`risk-alert ${warning.level === '跑路' ? 'level-run' : 'level-high'}`}>
+        <strong>⚠️ {warning.level}预警：{warning.summary}</strong>
+        <p>{warning.detail}</p>
+        <p class="risk-alert-links"><a href="/risk/">查看风险预警栏目</a> · <a href="/risk/airport-shutdown/">如何用付款周期控制预付风险</a></p>
+      </div>
+    )}
     <div class="provider-detail-grid">
       <div>
-        <div class="provider-facts">
-          <div class="fact-box"><small>套餐和价格</small><strong>本站未独立核验，不提供当前报价</strong></div>
-          <div class="fact-box"><small>线路与服务表现</small><strong>暂无可公开复核的本站实测记录</strong></div>
-          <div class="fact-box"><small>链接状态</small><strong>由站点运营者提供；本站未验证注册流程和持续可用性</strong></div>
-          <div class="fact-box"><small>商业关系</small><strong>链接可能包含推广参数，详情见商业披露</strong></div>
-        </div>
+        {profile && (profile.lineTypes || profile.regions) && (
+          <div class="provider-facts">
+            {profile.lineTypes && <div class="fact-box"><small>线路类型</small><strong>{profile.lineTypes.join(' / ')}</strong></div>}
+            {profile.regions && <div class="fact-box"><small>覆盖地区</small><strong>{profile.regions}</strong></div>}
+            {profile.since && <div class="fact-box"><small>运营背景</small><strong>{profile.since}</strong></div>}
+            {profile.refund && <div class="fact-box"><small>退款/试用</small><strong>{profile.refund}</strong></div>}
+          </div>
+        )}
         <div class="prose">
           <h2>购买前建议逐项确认</h2>
           <ul>
@@ -44,12 +56,23 @@ const jsonLd = {
         </div>
       </div>
       <aside class="entry-box">
-        <h2>注册入口</h2>
-        <p>外链由站点运营者提供，部分链接含推广参数。打开后请核对地址栏和页面信息。</p>
-        <ul class="provider-link-list">{provider.registerLinks.map((link) => <li><a class="button button-primary" href={link.url} target="_blank" rel="sponsored nofollow noopener noreferrer">{link.label} ↗</a></li>)}</ul>
-        {provider.extraLinks && <><h3 class="entry-subheading">其他入口</h3><ul class="provider-link-list">{provider.extraLinks.map((link) => <li><a href={link.url} target="_blank" rel="nofollow noopener noreferrer">{link.label} ↗</a></li>)}</ul></>}
-        {provider.coupon && <p><strong>优惠码：</strong>{provider.coupon}</p>}
-        <p><a href="/disclosure/">查看本站商业关系披露</a></p>
+        {warning && warning.level === '跑路' ? (
+          <>
+            <h2>注册入口已关闭</h2>
+            <p>该服务已确认跑路，注册入口与节点均已失效，本站不再提供入口链接。请勿充值或续费。</p>
+          </>
+        ) : (
+          <>
+            <h2>注册入口</h2>
+            {warning
+              ? <p>该服务处于高危预警状态，如仍要访问请谨慎，并避免预付长周期套餐。</p>
+              : <p>外链由站点运营者提供，部分链接含推广参数。打开后请核对地址栏和页面信息。</p>}
+            <ul class="provider-link-list">{provider.registerLinks.map((link) => <li><a class="button button-primary" href={link.url} target="_blank" rel="sponsored nofollow noopener noreferrer">{link.label} ↗</a></li>)}</ul>
+            {provider.extraLinks && <><h3 class="entry-subheading">其他入口</h3><ul class="provider-link-list">{provider.extraLinks.map((link) => <li><a href={link.url} target="_blank" rel="nofollow noopener noreferrer">{link.label} ↗</a></li>)}</ul></>}
+            {provider.coupon && <p><strong>优惠码：</strong>{provider.coupon}</p>}
+            <p><a href="/disclosure/">查看本站商业关系披露</a></p>
+          </>
+        )}
       </aside>
     </div>
   </section>

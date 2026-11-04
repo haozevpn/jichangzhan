@@ -1,16 +1,26 @@
 ---
+import { providerProfiles, providerWarnings } from '../data/providerProfiles';
 const { provider } = Astro.props;
+const profile = providerProfiles[provider.slug];
+const warning = providerWarnings[provider.slug];
+const pill = warning ? (warning.level === '跑路' ? '⚠️ 已跑路' : '⚠️ 高危') : (profile?.lineTypes?.[0] ?? '资料整理');
+const desc = warning
+  ? warning.summary
+  : profile && (profile.lineTypes || profile.regions)
+    ? [profile.lineTypes && `线路：${profile.lineTypes.join(' / ')}`, profile.regions && `覆盖：${profile.regions}`].filter(Boolean).join('；')
+    : '本页整理服务商名称与注册入口；套餐与价格以服务商页面为准。';
+const isRun = warning?.level === '跑路';
 ---
 
-<article class="provider-card">
+<article class={`provider-card${warning ? ' provider-card-risk' : ''}`}>
   <div class="provider-card-top">
     <div>
       <p class="card-kicker">服务商资料卡</p>
       <h2><a href={`/providers/${provider.slug}/`}>{provider.name}</a></h2>
     </div>
-    <span class="status-pill">暂无实测</span>
+    <span class={`status-pill${warning ? ' status-pill-risk' : ''}`}>{pill}</span>
   </div>
-  <p>本页整理服务商名称与注册入口；套餐、价格、条款和服务表现尚未由本站独立核验。</p>
+  <p>{desc}</p>
   <a class="text-link" href={`/providers/${provider.slug}/`}>查看资料卡 <span aria-hidden="true">→</span></a>
-  <a class="button button-primary provider-register" href={provider.registerLinks[0].url} target="_blank" rel="sponsored nofollow noopener noreferrer">{provider.registerLinks[0].label} ↗</a>
+  {!isRun && <a class="button button-primary provider-register" href={provider.registerLinks[0].url} target="_blank" rel="sponsored nofollow noopener noreferrer">{provider.registerLinks[0].label} ↗</a>}
 </article>

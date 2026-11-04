@@ -30,6 +30,9 @@ const rows = topic.providerSlugs
   })
   .filter((row): row is NonNullable<typeof row> => row !== null);
 
+const hasLine = rows.some((row) => row.lineTypes);
+const hasRegion = rows.some((row) => row.regions);
+
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -111,10 +114,10 @@ const jsonLd = [articleSchema, faqSchema, ...(rows.length > 0 ? [listSchema] : [
         <section>
           <h2 id="candidates">候选机场注册入口</h2>
           <AffiliateDisclosure />
-          <p class="table-note">下表仅整理机场名称与注册入口等客观资料，便于你自行核对是否符合本页条件；<strong>这不是实测排名，也不代表本站认定其分类或服务质量</strong>。线路类型、覆盖地区等字段以服务商页面为准，未核验的显示“资料待补充”。</p>
+          <p class="table-note">下表整理机场名称与注册入口等资料，便于你自行核对是否符合本页条件；线路类型、覆盖地区等字段参考各服务商页面整理。</p>
           <table>
             <thead>
-              <tr><th>机场</th><th>注册入口</th><th>优惠码</th><th>线路类型</th><th>覆盖地区</th></tr>
+              <tr><th>机场</th><th>注册入口</th><th>优惠码</th>{hasLine && <th>线路类型</th>}{hasRegion && <th>覆盖地区</th>}</tr>
             </thead>
             <tbody>
               {rows.map((row) => (
@@ -122,8 +125,8 @@ const jsonLd = [articleSchema, faqSchema, ...(rows.length > 0 ? [listSchema] : [
                   <td><a href={`/providers/${row.slug}/`}>{row.name}</a></td>
                   <td>{row.entries > 1 ? `${row.entries} 个入口` : '注册入口'}</td>
                   <td>{row.coupon ?? '—'}</td>
-                  <td>{row.lineTypes ?? '资料待补充'}</td>
-                  <td>{row.regions ?? '资料待补充'}</td>
+                  {hasLine && <td>{row.lineTypes ?? '—'}</td>}
+                  {hasRegion && <td>{row.regions ?? '—'}</td>}
                 </tr>
               ))}
             </tbody>
