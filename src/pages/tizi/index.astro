@@ -4,8 +4,16 @@ import EditorialIndex from '../../components/EditorialIndex.astro';
 import { tiziArticles } from '../../data/editorial';
 
 const items = tiziArticles.map((article) => ({ title: article.title, description: article.description, category: article.category, keywords: article.keywords, href: `/tizi/${article.slug}/` }));
+
+const directAnswer = '“梯子推荐”没有一个通用答案：先分清你要的是机场订阅、商业 VPN 还是自建 VPS，再按设备、预算、条款、隐私和可复核证据比较，并遵守适用法律与平台条款。本站不承诺未经测试的速度或可用性，只提供选购与核对框架；按需求挑机场可从机场推荐入口页进入。';
+
+const faqs = [
+  { question: '梯子和机场、VPN 有什么区别？', answer: '“梯子”是跨网络连接工具或服务的口语统称；机场指提供代理节点订阅的服务；商业 VPN 是独立产品。三者责任边界、客户端和条款不同，选择前先确认是哪一类。' },
+  { question: '梯子推荐怎么选才靠谱？', answer: '先把需求写成可核对条件（设备、预算、用量、目标服务），再比较套餐、退款、隐私和可复查测试证据，不要只按“高速”“稳定”等宣传词排序。' },
+  { question: '新手用梯子要注意什么？', answer: '用短周期先验证连接与客服，核对付款主体与官方入口是否一致，保护好订阅链接（等同账户凭证），并遵守当地法律与相关平台条款。' },
+];
 ---
 
 <BaseLayout title="梯子推荐、翻墙VPN与科学上网指南" description="梯子推荐、翻墙VPN推荐与科学上网选购指南，解释机场订阅、VPN 产品、客户端、价格和隐私条款；按设备、预算及适用规则核对条件，不承诺未经测试的速度或可用性。" keywords={['梯子推荐', '翻墙VPN推荐', '科学上网', '科学上网工具', '翻墙VPN', '性价比VPN', 'VPN选购指南', '机场节点', '机场订阅', '梯子怎么选']}>
-  <EditorialIndex title="梯子推荐、翻墙VPN与科学上网指南" description="从基础概念、服务条款和客户端条件开始比较网络代理产品。梯子推荐与科学上网工具选择应基于设备、预算、隐私需求和可复核证据；使用前请遵守适用法律及相关平台条款。" eyebrow="LADDER & VPN / START HERE" items={items} label="入门文章" />
+  <EditorialIndex title="梯子推荐、翻墙VPN与科学上网指南" description="从基础概念、服务条款和客户端条件开始比较网络代理产品。梯子推荐与科学上网工具选择应基于设备、预算、隐私需求和可复核证据；使用前请遵守适用法律及相关平台条款。" eyebrow="LADDER & VPN / START HERE" items={items} label="入门文章" directAnswer={directAnswer} faqs={faqs} />
 </BaseLayout>

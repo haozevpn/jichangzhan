@@ -1,0 +1,12 @@
+---
+import TopicLandingPage from '../../components/TopicLandingPage.astro';
+import { airportTopics } from '../../data/topics';
+
+export function getStaticPaths() {
+  return airportTopics.map((topic) => ({ params: { slug: topic.slug }, props: { topic } }));
+}
+
+const { topic } = Astro.props;
+---
+
+<TopicLandingPage topic={topic} />

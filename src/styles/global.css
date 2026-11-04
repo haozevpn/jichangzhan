@@ -269,3 +269,12 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--orange); outlin
 .direct-answer strong { font-size: 12px; }
 .direct-answer p { margin: 7px 0 0; font-size: 14px; line-height: 1.85; }
 .article-limits { margin-top: 36px !important; padding-top: 17px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+
+.topic-faq { margin: 32px 0 6px; }
+.topic-faq h2 { margin: 0 0 14px; font-size: 22px; color: var(--ink); }
+.topic-faq dl { margin: 0; }
+.faq-item { padding: 16px 18px; margin: 0 0 10px; background: #f1f4ee; border: 1px solid var(--line); border-radius: 6px; }
+.faq-item dt { margin: 0 0 7px; font-size: 15px; font-weight: 700; color: var(--ink); }
+.faq-item dd { margin: 0; color: var(--ink-soft); font-size: 14px; line-height: 1.85; }
+.table-note { margin: 10px 0 18px; color: var(--muted); font-size: 12px; line-height: 1.75; }
+.table-note a { color: var(--green); }

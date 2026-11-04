@@ -4,6 +4,8 @@ export type ContentSection = {
   bullets?: string[];
 };
 
+export type ArticleFaq = { question: string; answer: string };
+
 export type EditorialArticle = {
   slug: string;
   title: string;
@@ -12,6 +14,7 @@ export type EditorialArticle = {
   category: string;
   updatedAt: string;
   answer?: string;
+  faqs?: ArticleFaq[];
   sections: ContentSection[];
 };
 
@@ -307,12 +310,24 @@ export const questionArticles: EditorialArticle[] = [
 ];
 
 export const tiziArticles: EditorialArticle[] = [
-  { slug: 'what-is-airport', title: '机场是什么？网络线路服务新手入门', description: '解释机场、订阅链接、节点、客户端和线路之间的关系，并列出购买前需要核对的条件。', keywords: ['机场是什么', '机场服务', '机场订阅', '机场节点'], category: '梯子指南', updatedAt: editorialDate, sections: [{ heading: '几个词分别指什么', paragraphs: ['机场通常指提供代理节点订阅的服务商；订阅链接是账户配置入口；客户端负责导入、分流和连接；节点是可选择的连接端点；线路是节点之间的网络路径。它们不是同一个概念。'] }, { heading: '购买前核对什么', paragraphs: ['看付款周期、流量、设备数、退款、隐私和客服。价格或节点数量不能单独证明稳定性。'] }, { heading: '怎样避免过度承诺', paragraphs: ['先用短周期和可承受预算验证自己的设备与网络，再根据重复测试结果决定是否继续。'] }] },
-  { slug: 'what-is-tizi', title: '梯子是什么意思？梯子、机场、VPN 与代理的关系', description: '用服务形态和责任边界解释梯子、机场、VPN、代理和 VPS 的区别。', keywords: ['梯子是什么意思', '梯子和机场区别', '机场和 VPN 区别', '代理和 VPS'], category: '梯子指南', updatedAt: editorialDate, sections: [{ heading: '“梯子”是口语称呼', paragraphs: ['梯子通常是对跨网络连接工具或服务的俗称，不是统一产品类别。机场、商业 VPN、自建 VPS 可能都被口语称作梯子。'] }, { heading: '比较责任边界', paragraphs: ['托管服务由供应商维护更多服务端组件；VPS 需要用户承担系统、更新和安全配置。名称不能推出匿名性、速度或合规性。'] }, { heading: '选择时看实际需求', paragraphs: ['根据设备、维护能力、预算、条款和目标服务规则选择，不要只按宣传词排序。'] }] },
+  { slug: 'what-is-airport', title: '机场是什么？网络线路服务新手入门', description: '解释机场、订阅链接、节点、客户端和线路之间的关系，并列出购买前需要核对的条件。', keywords: ['机场是什么', '机场服务', '机场订阅', '机场节点'], category: '梯子指南', updatedAt: editorialDate, faqs: [
+    { question: '机场和 VPN 有什么区别？', answer: '机场通常指提供代理节点订阅的服务，用户用客户端导入订阅后选择节点；商业 VPN 是打包好的独立产品，由厂商维护更多服务端组件。两者在责任边界、客户端和条款上不同，不能用同一套评分比较。' },
+    { question: '新手买机场要注意什么？', answer: '先核对付款周期、流量、设备数、退款、隐私和客服，再用可承受的短周期验证连接与客服，之后才决定是否加长周期。价格或节点数量不能单独证明稳定性。' },
+    { question: '机场和梯子是一个意思吗？', answer: '“梯子”是对跨网络连接工具或服务的口语统称，机场只是其中一种形态，商业 VPN、自建 VPS 也可能被称作梯子。名称不能推出匿名性、速度或合规性。' },
+  ], sections: [{ heading: '几个词分别指什么', paragraphs: ['机场通常指提供代理节点订阅的服务商；订阅链接是账户配置入口；客户端负责导入、分流和连接；节点是可选择的连接端点；线路是节点之间的网络路径。它们不是同一个概念。'] }, { heading: '购买前核对什么', paragraphs: ['看付款周期、流量、设备数、退款、隐私和客服。价格或节点数量不能单独证明稳定性。'] }, { heading: '怎样避免过度承诺', paragraphs: ['先用短周期和可承受预算验证自己的设备与网络，再根据重复测试结果决定是否继续。'] }] },
+  { slug: 'what-is-tizi', title: '梯子是什么意思？梯子、机场、VPN 与代理的关系', description: '用服务形态和责任边界解释梯子、机场、VPN、代理和 VPS 的区别。', keywords: ['梯子是什么意思', '梯子和机场区别', '机场和 VPN 区别', '代理和 VPS'], category: '梯子指南', updatedAt: editorialDate, faqs: [
+    { question: '梯子和机场是一回事吗？', answer: '不完全是。梯子是口语统称，机场是提供代理节点订阅的具体服务形态之一。说“梯子推荐”时，可能指机场、商业 VPN 或自建 VPS，选择前要先确认是哪一类产品。' },
+    { question: '梯子、VPN、代理和 VPS 有什么区别？', answer: '它们的责任边界不同：机场和商业 VPN 由供应商维护服务端；代理是连接方式；VPS 需要用户自己承担系统、更新和安全配置。名称不能直接推出速度、匿名性或合规性，应按实际需求和维护能力选择。' },
+    { question: '梯子推荐怎么看才靠谱？', answer: '先区分产品类别，再按设备、预算、条款、隐私和可复核证据比较，不要只按宣传词排序。涉及服务表现的结论应以可复查的连续测试为准。' },
+  ], sections: [{ heading: '“梯子”是口语称呼', paragraphs: ['梯子通常是对跨网络连接工具或服务的俗称，不是统一产品类别。机场、商业 VPN、自建 VPS 可能都被口语称作梯子。'] }, { heading: '比较责任边界', paragraphs: ['托管服务由供应商维护更多服务端组件；VPS 需要用户承担系统、更新和安全配置。名称不能推出匿名性、速度或合规性。'] }, { heading: '选择时看实际需求', paragraphs: ['根据设备、维护能力、预算、条款和目标服务规则选择，不要只按宣传词排序。'] }] },
   { slug: 'subscription-link', title: '订阅链接是什么？怎么导入、更新和保护', description: '说明订阅链接的作用、导入方式、更新失败排查和凭证保护。', keywords: ['订阅链接是什么', '机场订阅导入', '订阅链接保护', '订阅更新失败'], category: '梯子指南', updatedAt: editorialDate, sections: [{ heading: '订阅链接就是账户入口', paragraphs: ['它通常包含可下载配置的凭证。任何拿到链接的人都可能使用或刷新配置，因此不要公开分享。'] }, { heading: '导入与更新', paragraphs: ['按客户端支持的格式导入，检查更新时间、响应状态和节点数量。更新失败时先确认链接未过期、网络可达且格式正确。'] }, { heading: '泄露后的处理', paragraphs: ['联系服务商确认是否能重置订阅，撤销旧设备会话，并检查是否有异常使用。'] }] },
   { slug: 'what-is-node', title: '机场节点是什么意思？节点、地区、倍率与线路', description: '拆解节点名称、地区标签、倍率和线路之间的关系，避免把营销标签当成性能证明。', keywords: ['机场节点是什么', '节点地区', '机场倍率', '机场线路'], category: '梯子指南', updatedAt: editorialDate, sections: [{ heading: '节点不是线路质量分数', paragraphs: ['节点通常是可连接的端点，地区标签可能表示出口或分组，倍率常用于流量计量，线路描述则涉及连接路径。它们不能互相替代。'] }, { heading: '如何比较', paragraphs: ['记录实际出口、延迟、丢包、吞吐、时间段和失败次数。没有样本时只记录服务商自述。'] }, { heading: '倍率要看计费口径', paragraphs: ['先确认基础流量、适用节点、统计方向、失败重试和后台更新时间，再做成本比较。'] }] },
   { slug: 'latency-and-multiplier', title: '延迟和倍率是什么意思？看懂两个关键数字', description: '解释延迟、抖动、丢包与倍率计费，给出可复查的记录表。', keywords: ['机场延迟', '机场倍率怎么算', '节点延迟', '流量倍率'], category: '梯子指南', updatedAt: editorialDate, sections: [{ heading: '延迟不等于速度', paragraphs: ['延迟表示请求往返耗时，抖动表示波动，丢包会影响长连接和语音视频；吞吐量则是另一项指标。'] }, { heading: '倍率不等于稳定性', paragraphs: ['倍率只描述计量方式。较低倍率不自动代表线路更好，必须结合总价、可用额度和自己的使用记录。'] }, { heading: '记录一组完整样本', paragraphs: ['同一设备、网络、节点和时段重复测试，保存中位数、分布和失败样本，避免只截取最低延迟。'] }] },
-  { slug: 'line-types', title: 'IEPL、IPLC、BGP、中转与直连是什么？', description: '用责任边界和可验证指标解释常见线路术语，避免把线路名称直接当成稳定性承诺。', keywords: ['IEPL 机场', 'IPLC 机场', 'BGP 机场', '中转机场', '直连机场'], category: '线路与协议', updatedAt: editorialDate, sections: [{ heading: '术语描述的是路径或入口', paragraphs: ['IEPL、IPLC、BGP、中转和直连通常描述网络路径、路由或入口方式。不同商家的定义和实现可能不同，不能只凭标题比较。'] }, { heading: '实际要问什么', paragraphs: ['询问适用套餐、节点范围、故障切换、维护通知和测试样本。要求服务商说明术语在其产品中的具体含义。'] }, { heading: '测评怎么写', paragraphs: ['把术语作为背景字段，把延迟、丢包、吞吐和断连作为观测字段，两者分开呈现。'] }] },
+  { slug: 'line-types', title: 'IEPL、IPLC、BGP、中转与直连是什么？', description: '用责任边界和可验证指标解释常见线路术语，避免把线路名称直接当成稳定性承诺。', keywords: ['IEPL 机场', 'IPLC 机场', 'BGP 机场', '中转机场', '直连机场'], category: '线路与协议', updatedAt: editorialDate, faqs: [
+    { question: '专线机场是什么意思？', answer: '专线机场通常指使用 IEPL、IPLC、BGP 或优质中转等线路的机场。这些术语描述的是网络路径或入口方式，不同商家定义和实现不同，不能只凭标题判断稳定或高速。' },
+    { question: 'IEPL、IPLC、BGP 哪个更好？', answer: '没有脱离具体产品和用途的通用答案。应请服务商说明术语在其产品中的含义、适用套餐和节点范围，再用延迟、丢包、吞吐的连续样本对照判断。' },
+    { question: '机场写了“专线”就一定稳定吗？', answer: '不一定。“专线”是描述路径的背景术语，不是稳定性承诺，还受节点负载、维护和本地网络影响。把术语当线索，用跨日期的连续样本核对延迟、丢包和断连。' },
+  ], sections: [{ heading: '术语描述的是路径或入口', paragraphs: ['IEPL、IPLC、BGP、中转和直连通常描述网络路径、路由或入口方式。不同商家的定义和实现可能不同，不能只凭标题比较。'] }, { heading: '实际要问什么', paragraphs: ['询问适用套餐、节点范围、故障切换、维护通知和测试样本。要求服务商说明术语在其产品中的具体含义。'] }, { heading: '测评怎么写', paragraphs: ['把术语作为背景字段，把延迟、丢包、吞吐和断连作为观测字段，两者分开呈现。'] }] },
 ];
 
 export const riskArticles: EditorialArticle[] = [

@@ -3,8 +3,8 @@ import Breadcrumbs from './Breadcrumbs.astro';
 import EditorialCard from './EditorialCard.astro';
 import PageIntro from './PageIntro.astro';
 
-const { title, description, eyebrow, items, label } = Astro.props;
-const schema = {
+const { title, description, eyebrow, items, label, directAnswer, faqs = [] } = Astro.props;
+const schemas: Record<string, unknown>[] = [{
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
   name: title,
@@ -19,15 +19,36 @@ const schema = {
       url: new URL(item.href, 'https://jichangzhan.com').toString(),
     })),
   },
-};
+}];
+if (faqs.length > 0) {
+  schemas.push({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({ '@type': 'Question', name: faq.question, acceptedAnswer: { '@type': 'Answer', text: faq.answer } })),
+  });
+}
 ---
 
-<script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, '\\u003c')} />
+{schemas.map((schema) => <script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, '\\u003c')} />)}
 <Breadcrumbs items={[{ label: '首页', href: '/' }, { label }]} />
 <PageIntro eyebrow={eyebrow} title={title} lead={description} />
 <section class="list-section wrap">
+  {directAnswer && <aside class="direct-answer"><strong>直接回答</strong><p>{directAnswer}</p></aside>}
   <div class="list-intro"><h2>{label} · {items.length} 篇</h2><p>按具体问题分类；来源与适用范围见文章正文。</p></div>
   <div class="card-grid editorial-grid">
     {items.map((item) => <EditorialCard {...item} />)}
   </div>
+  {faqs.length > 0 && (
+    <section class="topic-faq" id="faq">
+      <h2>常见问题</h2>
+      <dl>
+        {faqs.map((faq) => (
+          <div class="faq-item">
+            <dt>{faq.question}</dt>
+            <dd>{faq.answer}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  )}
 </section>

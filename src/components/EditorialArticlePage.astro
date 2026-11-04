@@ -25,15 +25,20 @@ const articleSchema = {
   publisher: { '@type': 'Organization', name: '机场站', url: 'https://jichangzhan.com' },
   mainEntityOfPage: new URL(Astro.url.pathname, 'https://jichangzhan.com').toString(),
 };
-const jsonLd = article.answer
+const faqEntries = article.faqs && article.faqs.length > 0
+  ? article.faqs
+  : article.answer
+    ? [{ question: article.title, answer: article.answer }]
+    : [];
+const jsonLd = faqEntries.length > 0
   ? [articleSchema, {
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
-      mainEntity: [{
+      mainEntity: faqEntries.map((faq) => ({
         '@type': 'Question',
-        name: article.title,
-        acceptedAnswer: { '@type': 'Answer', text: article.answer },
-      }],
+        name: faq.question,
+        acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+      })),
     }]
   : articleSchema;
 ---
@@ -62,6 +67,19 @@ const jsonLd = article.answer
           {section.bullets && <ul>{section.bullets.map((bullet) => <li>{bullet}</li>)}</ul>}
         </section>
       ))}
+      {article.faqs && article.faqs.length > 0 && (
+        <section class="topic-faq" id="faq">
+          <h2>常见问题</h2>
+          <dl>
+            {article.faqs.map((faq) => (
+              <div class="faq-item">
+                <dt>{faq.question}</dt>
+                <dd>{faq.answer}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
       <p class="article-limits">适用范围：平台规则、客户端版本、网络环境和服务条款可能变化。本文提供的是一般性排查与比较方法，不构成特定服务的可用性承诺。</p>
     </div>
   </article>

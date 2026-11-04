@@ -1,0 +1,154 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import EditorialMeta from './EditorialMeta.astro';
+import AffiliateDisclosure from './AffiliateDisclosure.astro';
+import { providers } from '../data/providers';
+import { providerProfiles } from '../data/providerProfiles';
+import { topicsUpdatedAt } from '../data/topics';
+import { site } from '../data/site';
+import type { AirportTopic } from '../data/topics';
+
+const { topic } = Astro.props as { topic: AirportTopic };
+const canonical = new URL(Astro.url.pathname, site.origin).toString();
+
+const providerMap = new Map(providers.map((p) => [p.slug, p]));
+const rows = topic.providerSlugs
+  .map((slug) => {
+    const provider = providerMap.get(slug);
+    if (!provider) return null;
+    const profile = providerProfiles[slug];
+    return {
+      slug,
+      name: provider.name,
+      entries: provider.registerLinks.length,
+      coupon: provider.coupon,
+      lineTypes: profile?.lineTypes?.join(' / '),
+      regions: profile?.regions,
+      verifiedAt: profile?.verifiedAt ?? null,
+    };
+  })
+  .filter((row): row is NonNullable<typeof row> => row !== null);
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: topic.title,
+  description: topic.description,
+  keywords: topic.keywords,
+  datePublished: topicsUpdatedAt,
+  dateModified: topicsUpdatedAt,
+  inLanguage: 'zh-CN',
+  author: { '@type': 'Organization', name: site.name },
+  publisher: { '@type': 'Organization', name: site.name, url: site.origin },
+  mainEntityOfPage: canonical,
+};
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: topic.faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+  })),
+};
+const listSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: `${topic.title}｜候选机场注册入口`,
+  itemListElement: rows.map((row, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: row.name,
+    url: new URL(`/providers/${row.slug}/`, site.origin).toString(),
+  })),
+};
+const jsonLd = [articleSchema, faqSchema, ...(rows.length > 0 ? [listSchema] : [])];
+---
+
+<BaseLayout
+  title={topic.metaTitle}
+  description={topic.description}
+  keywords={topic.keywords}
+  datePublished={topicsUpdatedAt}
+  dateModified={topicsUpdatedAt}
+  type="article"
+  jsonLd={jsonLd}
+>
+  <div class="article-head wrap">
+    <Breadcrumbs items={[{ label: '首页', href: '/' }, { label: '机场推荐', href: '/jichang/' }, { label: topic.title }]} />
+    <header class="prose">
+      <p class="eyebrow">{topic.eyebrow}</p>
+      <h1>{topic.title}</h1>
+      <p class="lede">{topic.description}</p>
+      <EditorialMeta publishedAt={topicsUpdatedAt} updatedAt={topicsUpdatedAt} category="机场推荐" revisionNote="按公开资料与编辑整理发布；线路、价格与服务表现以服务商页面和可复查测试为准。" />
+    </header>
+  </div>
+
+  <article class="article-body wrap">
+    <div class="article-content prose">
+      <aside class="direct-answer"><strong>直接回答</strong><p>{topic.directAnswer}</p></aside>
+      <p>{topic.intro}</p>
+
+      <nav class="article-toc" aria-label="文章目录">
+        <strong>本文内容</strong>
+        <ol>
+          {topic.criteria.map((section, index) => <li><a href={`#section-${index + 1}`}>{section.heading}</a></li>)}
+          {rows.length > 0 && <li><a href="#candidates">候选机场注册入口</a></li>}
+          <li><a href="#faq">常见问题</a></li>
+        </ol>
+      </nav>
+
+      {topic.criteria.map((section, index) => (
+        <section>
+          <h2 id={`section-${index + 1}`}>{section.heading}</h2>
+          {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+          {section.bullets && <ul>{section.bullets.map((bullet) => <li>{bullet}</li>)}</ul>}
+        </section>
+      ))}
+
+      {rows.length > 0 && (
+        <section>
+          <h2 id="candidates">候选机场注册入口</h2>
+          <AffiliateDisclosure />
+          <p class="table-note">下表仅整理机场名称与注册入口等客观资料，便于你自行核对是否符合本页条件；<strong>这不是实测排名，也不代表本站认定其分类或服务质量</strong>。线路类型、覆盖地区等字段以服务商页面为准，未核验的显示“资料待补充”。</p>
+          <table>
+            <thead>
+              <tr><th>机场</th><th>注册入口</th><th>优惠码</th><th>线路类型</th><th>覆盖地区</th></tr>
+            </thead>
+            <tbody>
+              {rows.map((row) => (
+                <tr>
+                  <td><a href={`/providers/${row.slug}/`}>{row.name}</a></td>
+                  <td>{row.entries > 1 ? `${row.entries} 个入口` : '注册入口'}</td>
+                  <td>{row.coupon ?? '—'}</td>
+                  <td>{row.lineTypes ?? '资料待补充'}</td>
+                  <td>{row.regions ?? '资料待补充'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p class="table-note">需要查看全部机场资料卡与注册入口，请前往 <a href="/providers/">机场列表</a>。</p>
+        </section>
+      )}
+
+      <section class="topic-faq" id="faq">
+        <h2>常见问题</h2>
+        <dl>
+          {topic.faqs.map((faq) => (
+            <div class="faq-item">
+              <dt>{faq.question}</dt>
+              <dd>{faq.answer}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <p class="article-limits">适用范围：平台规则、客户端版本、网络环境和服务条款可能变化。本文提供的是一般性选购与核对方法，不构成特定服务的价格、线路或可用性承诺。</p>
+    </div>
+  </article>
+
+  {topic.related.length > 0 && (
+    <section class="related-reading"><div class="wrap"><h2>继续阅读</h2><div class="related-list">{topic.related.map((item) => <a href={item.href}>{item.label}</a>)}</div></div></section>
+  )}
+</BaseLayout>
