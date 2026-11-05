@@ -7,12 +7,12 @@ import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
 import { providers } from '../../data/providers';
 ---
 
-<BaseLayout title="机场列表｜机场与网络服务入口" description="机场服务商资料列表与注册入口。本站整理独立选购指南，不发布未经实际测试的速度、稳定性或价格排名。">
+<BaseLayout title="机场列表｜机场与网络服务入口" description="机场服务商资料列表与注册入口，整理线路类型、覆盖地区与套餐资料，并按需求提供机场排行。">
   <Breadcrumbs items={[{ label: '首页', href: '/' }, { label: '机场列表' }]} />
-  <PageIntro eyebrow="AIRPORT LIST / 服务商索引" title="机场列表与注册入口" lead="这里按名称整理机场与网络服务商资料卡，方便查找对应入口。本站不展示未经核实的价格、线路参数或服务质量结论；真实体验与适用性取决于套餐、设备、地区网络和测试时间。" />
+  <PageIntro eyebrow="AIRPORT LIST / 服务商索引" title="机场列表与注册入口" lead="这里按名称整理机场与网络服务商资料卡，含线路类型、覆盖地区与套餐资料，方便查找对应入口。价格、条款与实际体验以服务商页面和你自己的测试为准；按名次查看请前往机场排行。" />
   <section class="list-section wrap">
     <AffiliateDisclosure />
-    <div class="list-intro"><h2>服务商资料卡 · {providers.length}</h2><p>资料按名称整理，不代表排名或测试结果。</p></div>
+    <div class="list-intro"><h2>服务商资料卡 · {providers.length}</h2><p>按名称整理机场资料与注册入口；按名次查看请前往 <a href="/rankings/">机场排行</a>。</p></div>
     <div class="provider-grid">{providers.map((provider) => <ProviderCard provider={provider} />)}</div>
   </section>
 </BaseLayout>

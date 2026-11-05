@@ -290,3 +290,31 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--orange); outlin
 .risk-alert-links { font-weight: 400 !important; }
 .status-pill-risk { border-color: #f3c0ba !important; color: #b42318 !important; background: #fdecea !important; }
 .provider-card-risk { border-color: #f3c0ba; }
+
+.rank-section { margin: 0 0 42px; }
+.rank-section > h2 { font-size: 24px; margin: 0 0 16px; }
+.rank-cat-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin: 0 0 14px; flex-wrap: wrap; }
+.rank-cat-head h2 { margin: 4px 0 6px; font-size: 21px; }
+.rank-cat-intro { margin: 0; max-width: 620px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+.rank-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.rank-row { display: flex; align-items: center; gap: 16px; padding: 16px 18px; background: #fff; border: 1px solid var(--line); border-radius: 8px; }
+.rank-row.rank-top { border-color: var(--green); box-shadow: 0 0 0 1px var(--green); }
+.rank-num { flex: 0 0 auto; width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--deep); color: var(--lime); font-family: 'DM Mono', monospace; font-weight: 700; font-size: 15px; }
+.rank-top .rank-num { background: var(--green); color: #fff; }
+.rank-body { flex: 1 1 auto; min-width: 0; }
+.rank-body h3 { margin: 0 0 4px; font-size: 17px; display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.rank-body h3 a { color: var(--ink); text-decoration: none; }
+.rank-body h3 a:hover { color: var(--green); text-decoration: underline; }
+.rank-badge { font-style: normal; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; background: var(--green); color: #fff; }
+.rank-badge.second { background: #4a6b52; }
+.rank-line { margin: 0 0 4px; color: var(--green); font-size: 12px; font-weight: 700; }
+.rank-reason { margin: 0; color: var(--ink-soft); font-size: 13px; line-height: 1.7; }
+.rank-cta { flex: 0 0 auto; }
+.rank-list-compact .rank-row { padding: 13px 16px; }
+.rank-list-compact .rank-num { width: 28px; height: 28px; font-size: 13px; }
+.rank-list-compact .rank-body h3 { font-size: 15px; }
+@media (max-width: 640px) {
+  .rank-row { flex-wrap: wrap; }
+  .rank-cta { width: 100%; }
+  .rank-row .button.rank-cta { margin: 0; }
+}

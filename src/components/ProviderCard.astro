@@ -3,12 +3,12 @@ import { providerProfiles, providerWarnings } from '../data/providerProfiles';
 const { provider } = Astro.props;
 const profile = providerProfiles[provider.slug];
 const warning = providerWarnings[provider.slug];
-const pill = warning ? (warning.level === '跑路' ? '⚠️ 已跑路' : '⚠️ 高危') : (profile?.lineTypes?.[0] ?? '资料整理');
+const pill = warning ? (warning.level === '跑路' ? '⚠️ 已跑路' : '⚠️ 高危') : (profile?.lineTypes?.[0] ?? '机场资料');
 const desc = warning
   ? warning.summary
   : profile && (profile.lineTypes || profile.regions)
     ? [profile.lineTypes && `线路：${profile.lineTypes.join(' / ')}`, profile.regions && `覆盖：${profile.regions}`].filter(Boolean).join('；')
-    : '本页整理服务商名称与注册入口；套餐与价格以服务商页面为准。';
+    : '整理机场注册入口与资料；套餐与价格以服务商页面为准。';
 const isRun = warning?.level === '跑路';
 ---
 
